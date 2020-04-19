@@ -4,4 +4,7 @@ A website for Holly
 
 ## Tools Used
 
-NextJS React TailwindCSS Prismic
+- NextJS
+- React
+- TailwindCSS
+- Prismic
