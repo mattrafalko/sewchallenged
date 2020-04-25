@@ -7,4 +7,4 @@ A website for Holly
 - NextJS
 - React
 - TailwindCSS
-- Prismic
+- Prismic CMS

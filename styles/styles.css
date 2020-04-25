@@ -1,0 +1,13 @@
+@tailwind base;
+/* purgecss end ignore */
+@tailwind components;
+@tailwind utilities;
+
+p {
+  @apply mb-2;
+  @apply text-xl;
+}
+
+a {
+  @apply text-pink-700;
+}

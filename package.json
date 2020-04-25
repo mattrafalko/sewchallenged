@@ -1,12 +1,14 @@
 {
   "name": "sewchallenged",
   "version": "1.0.0",
-  "description": "Sew Challenged website",
+  "description": "Sew Challenged Website",
   "main": "index.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build:css": "postcss css/tailwind.css -o css/app.css",
+    "watch:css": "postcss css/tailwind.css -o css/app.css -w"
   },
   "keywords": [
     "blog",
@@ -15,9 +17,25 @@
   "author": "Matt Rafalko",
   "license": "ISC",
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.1.2",
+    "@zeit/next-css": "^1.0.1",
+    "autoprefixer": "^9.7.6",
     "axios": "^0.19.2",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^9.3.5",
+    "postcss-easy-import": "^3.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "prismic-javascript": "^2.7.1",
+    "prismic-reactjs": "^1.3.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tailwindcss": "^1.2.0"
+  },
+  "devDependencies": {
+    "postcss-cli": "^7.1.0",
+    "prettier-plugin-tailwind": "^2.0.0"
   }
 }
