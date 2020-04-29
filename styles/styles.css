@@ -11,3 +11,12 @@ p {
 a {
   @apply text-pink-700;
 }
+
+button {
+  @apply m-2;
+  @apply hover-bg-purple-300;
+  @apply rounded;
+  @apply p-2;
+  @apply text-xl;
+  @apply select-none;
+}

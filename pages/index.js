@@ -1,10 +1,10 @@
-import React from 'react';
-import Layout from '../components/Layout';
-import Link from 'next/link';
-import { Client, linkResolver } from '../prismic-configuration';
-import Prismic from 'prismic-javascript';
-import { RichText } from 'prismic-reactjs';
-import RecentBlogPostsSidebar from '../components/RecentBlogPostsSidebar';
+import React from "react";
+import Layout from "../components/Layout";
+import Link from "next/link";
+import { Client, linkResolver } from "../prismic-configuration";
+import Prismic from "prismic-javascript";
+import { RichText } from "prismic-reactjs";
+import RecentBlogPostsSidebar from "../components/RecentBlogPostsSidebar";
 
 const Home = (props) => {
   const { results } = props.doc;
@@ -34,16 +34,10 @@ const Home = (props) => {
       <Layout>
         <div className="grid px-3 py-4 lg:grid-cols-12">
           <div className="hidden col-span-3 lg:block">
-            <p>
-              I'm beginning to feel like a Rap God, Rap God. All my people from
-              the front to the back nod, back nod. Now who thinks their arms are
-              long enough to slap box, slap box?. Let me show you maintaining
-              this shit ain't that hard, that hard. Everybody want the key and
-              the secret. To rap immortality like I have got.
-            </p>
+            <p>Maybe a card with some fun info</p>
           </div>
 
-          <div className="h-screen col-span-6 mx-auto overflow-scroll">
+          <div className="col-span-6 mx-auto">
             <div className="container mx-auto">{posts}</div>
           </div>
 
@@ -59,7 +53,7 @@ const Home = (props) => {
 Home.getInitialProps = async (context) => {
   const req = context.req;
 
-  const query = Prismic.Predicates.at('document.type', 'blog');
+  const query = Prismic.Predicates.at("document.type", "blog");
   const res = await Client(req).query(query);
 
   return {
