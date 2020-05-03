@@ -33,9 +33,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
-    "tailwindcss": "^1.2.0"
+    "tailwindcss": "^1.4.0"
   },
   "devDependencies": {
+    "dotenv-webpack": "^1.7.0",
     "postcss-cli": "^7.1.0",
     "prettier-plugin-tailwind": "^2.0.0"
   }

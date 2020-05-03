@@ -1,38 +1,76 @@
-import React from 'react';
-import Layout from '../components/Layout';
-import Prismic from 'prismic-javascript';
-import { Client } from '../prismic-configuration';
-import { RichText } from 'prismic-reactjs';
-
+import React, { useState, useEffect } from "react";
+import Layout from "../components/Layout";
+import Prismic from "prismic-javascript";
+import { Client } from "../prismic-configuration";
+import ProductCard from "../components/ProductCard";
+import SelectedProductCard from "../components/SelectedProductCard";
 const Shop = (props) => {
-  const products = props.doc.results;
+  const [isInitialized, setIsIntialized] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setProducts(props.doc.results);
+      setSelectedProduct(products[0]);
+    }
+    setIsIntialized(true);
+  }, []);
+
+  const handleSelectedProduct = (productId) => {
+    let product = products.filter((item) => item.id === productId);
+    setSelectedProduct(product[0]);
+  };
+
+  console.log(products[0]);
 
   return (
-    <div>
+    <React.Fragment>
       <Layout>
-        <h1>Shop</h1>
-        {products.map((product) => (
-          <div style={{ maxWidth: '15rem' }}>
-            <img
-              src={product.data.image.url}
-              style={{ maxHeight: '7em', width: '100%' }}
+        <div className="flex container mx-auto justify-center mb-4 mt-2">
+          {selectedProduct ? (
+            <SelectedProductCard item={selectedProduct} />
+          ) : null}
+        </div>
+        <div className="flex">
+          <h1 className="">Items</h1>
+          {products.map((product) => (
+            <ProductCard
+              item={product}
+              handleSelection={handleSelectedProduct}
+              key={product.uid}
             />
-            <h1>{product.uid}</h1>
-            <p>{product.data.description[0].text}</p>
-            <span>{product.data.price}</span>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className="flex">
+          <h1 className="">Items</h1>
+          {products.map((product) => (
+            <ProductCard
+              item={product}
+              handleSelection={handleSelectedProduct}
+              key={product.uid}
+            />
+          ))}
+        </div>
+        <div className="flex">
+          <h1 className="">Items</h1>
+          {products.map((product) => (
+            <ProductCard
+              item={product}
+              handleSelection={handleSelectedProduct}
+              key={product.uid}
+            />
+          ))}
+        </div>
       </Layout>
-    </div>
+    </React.Fragment>
   );
 };
 
 Shop.getInitialProps = async (context) => {
   const req = context.req;
-
-  const query = Prismic.Predicates.at('document.type', 'product');
+  const query = Prismic.Predicates.at("document.type", "product");
   const res = await Client(req).query(query);
-
   return {
     doc: res,
   };
