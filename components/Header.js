@@ -1,11 +1,11 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <div className="sticky top-0 p-6 bg-pink-100">
       <header className="flex justify-between">
-        <h1 className="text-3xl text-pink-700">
+        <h1 className="text-3xl text-pink-700 font-extrabold">
           <Link href="/">
             <a>
               <span className="text-pink-500">Sew</span>

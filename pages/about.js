@@ -2,36 +2,23 @@ import React from "react";
 import { Client, linkResolver } from "../prismic-configuration";
 import Layout from "../components/Layout";
 import { RichText } from "prismic-reactjs";
-import AboutPageLinksSidebar from "../components/AboutPageLinksSidebar";
 
 const About = (props) => {
   const { data } = props.doc;
   return (
     <React.Fragment>
       <Layout>
-        <div className="grid px-3 py-4 lg:grid-cols-12">
-          <div className="col-span-1"></div>
-          <div className="col-span-7">
-            <div className="container mx-auto overflow-hidden border rounded-lg shadow-xl">
-              <img
-                className="w-full h-65"
-                src="https://images.unsplash.com/photo-1514907558033-da9156c14c95?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-              <div className="px-3 py-2">
-                <h1 className="text-3xl font-bold text-right">
-                  About <span className="text-pink-500">Sew</span>
-                  <span className="text-pink-700">Challenged</span>
-                </h1>
-                <RichText
-                  render={data.description}
-                  linkResolver={linkResolver}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-3 ">
-            <AboutPageLinksSidebar />
+        <div className="container mx-auto overflow-hidden border rounded-lg shadow-xl">
+          <img
+            className="w-full h-65"
+            src="https://images.unsplash.com/photo-1514907558033-da9156c14c95?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+          />
+          <div className="px-3 py-2">
+            <h1 className="text-3xl font-bold text-right">
+              About <span className="text-pink-500">Sew</span>
+              <span className="text-pink-700">Challenged</span>
+            </h1>
+            <RichText render={data.description} linkResolver={linkResolver} />
           </div>
         </div>
       </Layout>

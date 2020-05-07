@@ -1,50 +1,52 @@
 import React from "react";
 import Layout from "../components/Layout";
 import Link from "next/link";
-import { Client, linkResolver } from "../prismic-configuration";
+import { Client } from "../prismic-configuration";
 import Prismic from "prismic-javascript";
 import { RichText } from "prismic-reactjs";
-import RecentBlogPostsSidebar from "../components/RecentBlogPostsSidebar";
+import moment from "moment";
 
 const Home = (props) => {
   const { results } = props.doc;
-  const blogPostLinks = results.map((blogPost) => blogPost.uid);
 
-  const posts = results.map((item) => (
-    <div className="max-w-xl mb-4 overflow-hidden rounded shadow-xl">
-      <img className="w-full h-full" src={item.data.image.url} />
-      <div className="px-3 py-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl">
-            <Link href={`/blog/${item.uid}`}>
-              <a className="text-pink-700">
-                {RichText.asText(item.data.blogtitle)}
-              </a>
-            </Link>
-            <span className="text-lg">{item.first_publication_date}</span>
-          </h2>
+  const posts = results.map((item) => {
+    const blogDate = moment(item.first_publication_date)
+      .toDate()
+      .toLocaleDateString();
+    const blogTime = moment(item.first_publication_date)
+      .toDate()
+      .toLocaleTimeString();
+
+    return (
+      <div className="flex flex-col rounded-lg shadow-lg overflow-hidden max-w-lg lg:max-w-none lg:mx-0 mx-auto">
+        <div className="flex-shrink-0">
+          <img className="h-64 w-full object-cover" src={item.data.image.url} />
         </div>
-        {RichText.asText(item.data.blogbody)}
+
+        <div className="p-6 flex flex-col justify-between h-0 flex-1">
+          <div className="">
+            <p className="text-sm leading-5 font-medium">Tags</p>
+            <h2 className="mt-2 text-xl leading-7 font-semibold">
+              <Link href={`/blog/${item.uid}`}>
+                <a className="">{RichText.asText(item.data.blogtitle)}</a>
+              </Link>
+            </h2>
+          </div>
+
+          <div className="mt-6 text-gray-600">
+            <time>
+              Posted on {blogDate} at {blogTime}
+            </time>
+          </div>
+        </div>
       </div>
-    </div>
-  ));
+    );
+  });
 
   return (
     <React.Fragment>
       <Layout>
-        <div className="grid px-3 py-4 lg:grid-cols-12">
-          <div className="hidden col-span-3 lg:block">
-            <p>Maybe a card with some fun info</p>
-          </div>
-
-          <div className="col-span-6 mx-auto">
-            <div className="container mx-auto">{posts}</div>
-          </div>
-
-          <div className="hidden col-span-3 lg:block">
-            <RecentBlogPostsSidebar blogList={blogPostLinks} />
-          </div>
-        </div>
+        <div className="grid gap-12 mt-12 lg:grid-cols-3 ">{posts}</div>
       </Layout>
     </React.Fragment>
   );

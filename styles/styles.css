@@ -6,6 +6,9 @@
 p {
   @apply mb-2;
   @apply text-xl;
+  @apply leading-6;
+  @apply text-base;
+  @apply mt-3;
 }
 
 a {
