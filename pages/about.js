@@ -8,7 +8,7 @@ const About = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="container mx-auto overflow-hidden border rounded-lg shadow-xl">
+        <div className="container mx-auto overflow-hidden border rounded-lg shadow-xl mt-12">
           <img
             className="w-full h-65"
             src="https://images.unsplash.com/photo-1514907558033-da9156c14c95?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"

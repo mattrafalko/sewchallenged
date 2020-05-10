@@ -4,6 +4,7 @@ import Prismic from "prismic-javascript";
 import { Client } from "../prismic-configuration";
 import ProductCard from "../components/ProductCard";
 import SelectedProductCard from "../components/SelectedProductCard";
+
 const Shop = (props) => {
   const [isInitialized, setIsIntialized] = useState(false);
   const [products, setProducts] = useState([]);

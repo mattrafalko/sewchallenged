@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../components/Layout";
-import Link from "next/link";
 import { Client } from "../prismic-configuration";
 import Prismic from "prismic-javascript";
 import HomeBlogPostCard from "../components/HomeBlogPostCard";

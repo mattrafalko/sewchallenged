@@ -78,3 +78,12 @@ a {
   @apply px-2;
   @apply py-1;
 }
+
+.sidebar {
+  @apply flex;
+  @apply flex-col;
+}
+
+.sidebar > li {
+  @apply mb-4;
+}
