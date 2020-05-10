@@ -61,15 +61,6 @@ a {
   @apply mx-auto;
 }
 
-.cardBody {
-  @apply p-6;
-  @apply flex;
-  @apply flex-col;
-  @apply justify-between;
-  @apply h-0;
-  @apply flex-1;
-}
-
 .addToCartButton {
   @apply text-lg;
   @apply text-white;

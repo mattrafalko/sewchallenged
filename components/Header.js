@@ -14,8 +14,8 @@ export default function Header() {
           </Link>
         </h1>
         <div>
-          <ul className=" ">
-            <li className="">
+          <ul className="">
+            <li>
               <Link href="/">
                 <a className="text-pink-700 hover:text-pink-900">Home</a>
               </Link>

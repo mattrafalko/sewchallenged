@@ -10,6 +10,7 @@ const Home = (props) => {
   const posts = results.map((item) => {
     return (
       <HomeBlogPostCard
+        key={item.uid}
         uid={item.uid}
         imgUrl={item.data.image.url}
         blogTitle={item.data.blogtitle}
@@ -29,10 +30,8 @@ const Home = (props) => {
 
 Home.getInitialProps = async (context) => {
   const req = context.req;
-
   const query = Prismic.Predicates.at("document.type", "blog");
   const res = await Client(req).query(query);
-
   return {
     doc: res,
   };
