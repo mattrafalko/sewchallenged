@@ -3,9 +3,9 @@ import React from "react";
 const SelectedProductCard = (props) => {
   const { item } = props;
   return (
-    <div class="selectedProductCard lg:max-w-none lg:mx-4">
+    <div class="selectedProductCard lg:max-w-xl mx-auto ">
       <div class="flex-shrink-0">
-        <img className="h-full w-full object-cover" src={item.data.image.url} />
+        <img className="w-full object-cover" src={item.data.image.url} />
       </div>
 
       <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">

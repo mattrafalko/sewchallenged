@@ -1,4 +1,5 @@
 import React from "react";
+import scrollToTop from "../Utils";
 
 const ProductCard = (props) => {
   const { item } = props;
@@ -6,7 +7,10 @@ const ProductCard = (props) => {
   return (
     <div
       className="card lg:max-w-sm lg:mx-4"
-      onClick={() => props.handleSelection(item.id)}
+      onClick={() => {
+        props.handleSelection(item.id);
+        scrollToTop();
+      }}
     >
       <div className="flex-shrink-0">
         <img

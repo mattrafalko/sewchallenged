@@ -27,20 +27,46 @@ const Shop = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="flex flex-wrap mt-12">
+        <div className="flex mt-12">
           {selectedProduct ? (
             <SelectedProductCard item={selectedProduct} />
           ) : null}
         </div>
         <div className="">
-          <h1 className="p-6">Category</h1>
-          {products.map((product) => (
-            <ProductCard
-              item={product}
-              handleSelection={handleSelectedProduct}
-              key={product.uid}
-            />
-          ))}
+          <h1 className="p-6">Category 1</h1>
+          <div className="flex flex-wrap">
+            {products.map((product) => (
+              <ProductCard
+                item={product}
+                handleSelection={handleSelectedProduct}
+                key={product.uid}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="">
+          <h1 className="p-6">Category 2</h1>
+          <div className="flex flex-wrap">
+            {products.map((product) => (
+              <ProductCard
+                item={product}
+                handleSelection={handleSelectedProduct}
+                key={product.uid}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="">
+          <h1 className="p-6">Category 3</h1>
+          <div className="flex flex-wrap">
+            {products.map((product) => (
+              <ProductCard
+                item={product}
+                handleSelection={handleSelectedProduct}
+                key={product.uid}
+              />
+            ))}
+          </div>
         </div>
       </Layout>
     </React.Fragment>
