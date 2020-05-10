@@ -14,13 +14,13 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date }) => {
   return (
     <React.Fragment>
       <Link href={`/blog/${uid}`}>
-        <div className="lg:max-w-none lg:mx-4 card">
+        <div className="card lg:max-w-none lg:mx-4">
           <div className="flex-shrink-0">
             <img className="h-64 w-full object-cover" src={imgUrl} />
           </div>
 
           <div className="cardBody">
-            <div className="">
+            <div>
               <p className="text-sm leading-5 font-medium">Tags</p>
               <h2 className="mt-2 text-xl leading-7 font-semibold">
                 <a className="">{RichText.asText(blogTitle)}</a>

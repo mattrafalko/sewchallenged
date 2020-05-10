@@ -27,33 +27,13 @@ const Shop = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="flex container mx-auto justify-center mb-4 mt-2">
+        <div className="flex flex-wrap mt-12">
           {selectedProduct ? (
             <SelectedProductCard item={selectedProduct} />
           ) : null}
         </div>
-        <div className="flex">
-          <h1 className="">Items</h1>
-          {products.map((product) => (
-            <ProductCard
-              item={product}
-              handleSelection={handleSelectedProduct}
-              key={product.uid}
-            />
-          ))}
-        </div>
-        <div className="flex">
-          <h1 className="">Items</h1>
-          {products.map((product) => (
-            <ProductCard
-              item={product}
-              handleSelection={handleSelectedProduct}
-              key={product.uid}
-            />
-          ))}
-        </div>
-        <div className="flex">
-          <h1 className="">Items</h1>
+        <div className="">
+          <h1 className="p-6">Category</h1>
           {products.map((product) => (
             <ProductCard
               item={product}

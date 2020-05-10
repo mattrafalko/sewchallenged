@@ -47,3 +47,34 @@ a {
   @apply text-gray-600;
   @apply text-sm;
 }
+/*End Section*/
+
+/*Selected Product Card*/
+
+.selectedProductCard {
+  @apply flex;
+  @apply flex-col;
+  @apply rounded-lg;
+  @apply shadow-md;
+  @apply overflow-hidden;
+  @apply mb-8;
+  @apply mx-auto;
+}
+
+.cardBody {
+  @apply p-6;
+  @apply flex;
+  @apply flex-col;
+  @apply justify-between;
+  @apply h-0;
+  @apply flex-1;
+}
+
+.addToCartButton {
+  @apply text-lg;
+  @apply text-white;
+  @apply bg-pink-700;
+  @apply rounded-lg;
+  @apply px-2;
+  @apply py-1;
+}

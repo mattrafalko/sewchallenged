@@ -5,34 +5,26 @@ const ProductCard = (props) => {
 
   return (
     <div
-      className="max-w-xl rounded overflow-hidden shadow-lg"
+      className="card lg:max-w-sm lg:mx-4"
       onClick={() => props.handleSelection(item.id)}
     >
-      <img
-        className="w-full"
-        src={item.data.image.url}
-        alt="Sunset in the mountains"
-      />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">
-          {item.data.description[0].text}
-        </div>
-        <p className="text-gray-700 text-base">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
-        </p>
+      <div className="flex-shrink-0">
+        <img
+          className="h-64 w-full object-cover"
+          src={item.data.image.url}
+          alt={item.data.description[0].text}
+        />
       </div>
-      <div className="px-6 py-4">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #photography
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #travel
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-          #winter
-        </span>
+
+      <div className="cardBody">
+        <div>
+          <div className="font-bold text-xl mb-2">
+            {item.data.description[0].text}
+          </div>
+        </div>
+      </div>
+      <div className="px-6 py-4 flex justify-start">
+        <span>${item.data.price}</span>
       </div>
     </div>
   );
