@@ -13,7 +13,7 @@ export default function Header() {
             </a>
           </Link>
         </h1>
-        <ul className="flex items-center w-auto">
+        {/* <ul className="flex items-center w-auto">
           <li className="mr-6">
             <Link href="/">
               <a className="text-pink-700 hover:text-pink-900">Home</a>
@@ -29,7 +29,7 @@ export default function Header() {
               <a className="text-pink-700 hover:text-pink-900">About</a>
             </Link>
           </li>
-        </ul>
+        </ul> */}
       </header>
     </div>
   );
