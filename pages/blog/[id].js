@@ -9,10 +9,10 @@ const Post = (props) => {
   return (
     <div>
       <Layout>
-        <div className="p-3 mb-3 rounded-lg bg-pink-200 mt-6 items-center mx-auto">
+        <div className="p-3 mb-3 rounded-lg bg-pink-200 items-center">
           <h1 className="text-3xl mb-3">{RichText.asText(data.blogtitle)}</h1>
         </div>
-        <div className="container mx-auto overflow-hidden border rounded-lg shadow-xl flex flex-col justify-between ">
+        <div className="overflow-hidden border rounded-lg shadow-xl flex flex-col justify-between ">
           <div className="mx-auto">
             <img className="" src={data.image.url} />
           </div>

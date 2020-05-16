@@ -6,11 +6,11 @@ import Link from "next/link";
 const Layout = (props) => (
   <React.Fragment>
     <Header />
-    <div className="grid grid-cols-12">
-      <div className="col-span-3 lg:block hidden ">
+    <div className="flex">
+      <div className="flex lg:block hidden">
         <SideNavigation />
       </div>
-      <div className="lg:col-span-9 col-span-12 px-4 pb-16 h-full lg:overflow-scroll">
+      <div className="flex flex-col flex-grow px-4 pb-16 mt-8">
         {props.children}
       </div>
     </div>

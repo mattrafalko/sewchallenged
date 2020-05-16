@@ -28,7 +28,7 @@ const Shop = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="flex justify-between p-6 rounded-lg bg-pink-200 mt-6 items-center">
+        <div className="flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
           <h1>cart Total: $200</h1>
           <button className="addToCartButton">Checkout</button>
         </div>

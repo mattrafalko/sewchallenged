@@ -22,7 +22,7 @@ const Home = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="flex flex-wrap mt-12">{posts}</div>
+        <div className="flex flex-wrap">{posts}</div>
       </Layout>
     </React.Fragment>
   );
