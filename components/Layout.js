@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "./Header";
 import SideNavigation from "./SideNavigation";
-import { Link, Head } from "next/link";
+import Head from "next/head";
 
 const Layout = (props) => (
   <React.Fragment>
-    {/* <Head>
+    <Head>
       <title>SewChallenged</title>
       <meta charSet="uf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head> */}
+    </Head>
     <Header />
     <div className="flex">
       <div className="flex lg:block hidden">

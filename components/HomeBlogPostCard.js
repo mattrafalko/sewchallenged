@@ -14,7 +14,7 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date }) => {
   return (
     <React.Fragment>
       <Link href={`/blog/${uid}`}>
-        <div className="card lg:max-w-none lg:mx-4">
+        <div className="card lg:max-w-none lg:mx-4 ">
           <div className="flex-shrink-0">
             <img className="h-64 w-full object-cover" src={imgUrl} />
           </div>

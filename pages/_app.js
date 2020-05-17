@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import App from "next/app";
 import ShoppingCartContext from "../components/ShoppingCartContext";
 import ProductsContext from "../components/ProductsContext";
-import CartModalContext from "../components/CartModalContext";
 
 function MyApp({ Component, pageProps }) {
   const [products, setProducts] = useState([]);
@@ -14,9 +13,6 @@ function MyApp({ Component, pageProps }) {
     cartItems: [],
     checkoutComplete: false,
   });
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const toggleModal = () => setModalOpen(!modalOpen);
 
   const additemToCart = (id, qty) => {
     const { cartItems, cartTotal } = cart;
@@ -41,22 +37,20 @@ function MyApp({ Component, pageProps }) {
   };
 
   return (
-    <CartModalContext.Provider value={{ modalOpen, toggleModal }}>
-      <ProductsContext.Provider
-        value={{
-          products,
-          selectedProduct,
-          categories,
-          createProductCatergories,
-          setProducts,
-          setSelectedProduct,
-        }}
-      >
-        <ShoppingCartContext.Provider value={{ cart, additemToCart }}>
-          <Component {...pageProps} />
-        </ShoppingCartContext.Provider>
-      </ProductsContext.Provider>
-    </CartModalContext.Provider>
+    <ProductsContext.Provider
+      value={{
+        products,
+        selectedProduct,
+        categories,
+        createProductCatergories,
+        setProducts,
+        setSelectedProduct,
+      }}
+    >
+      <ShoppingCartContext.Provider value={{ cart, additemToCart }}>
+        <Component {...pageProps} />
+      </ShoppingCartContext.Provider>
+    </ProductsContext.Provider>
   );
 }
 export default MyApp;

@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import ShoppingCartContext from "./ShoppingCartContext";
-import CartModal from "./CartModal";
-import CartModalContext from "./CartModalContext";
 import Link from "next/link";
+import { setCookie } from "nookies";
 
 const CartInfo = () => {
   const { cart } = useContext(ShoppingCartContext);
-  //const { toggleModal } = useContext(CartModalContext);
 
   return (
     <React.Fragment>
@@ -14,15 +12,14 @@ const CartInfo = () => {
         <h1>Cart Total: ${cart.cartTotal}</h1>
         <button
           className="addToCartButton"
-          //onClick={() => toggleModal()}
           disabled={cart.cartItems.length <= 0 ? "disabled" : ""}
+          onClick={() => setCookie(ctx, "cart", cart)}
         >
           <Link href="/checkout">
             <a>Checkout</a>
           </Link>
         </button>
       </div>
-      <CartModal />
     </React.Fragment>
   );
 };

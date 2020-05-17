@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 
 function SideNavigation() {
   return (
-    <div className="px-6 bg-pink-200 min-h-screen sticky top-0 flex flex-col justify-between">
+    <div className="px-6 bg-green-400 min-h-screen sticky top-0 flex flex-col justify-between">
       <div className="mt-8">
         <div className="xl:text-4xl lg:text-3xl text-pink-700 font-extrabold w-full">
           <Link href="/">

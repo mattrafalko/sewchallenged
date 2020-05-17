@@ -36,9 +36,7 @@ const SelectedProductCard = ({ item, addToCart }) => {
           <span>{qty}</span>
           <button onClick={() => incrementQty()}>More</button>
           <button
-            className={`addToCartButton ${
-              qty === 0 ? "disabled:opacity-75" : ""
-            }`}
+            className={`green ${qty === 0 ? "disabled:opacity-75" : ""}`}
             disabled={qty === 0 ? "disabled" : null}
             onClick={() => addToCart(item.id, qty)}
           >
