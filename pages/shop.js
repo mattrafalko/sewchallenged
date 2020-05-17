@@ -1,77 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Layout from "../components/Layout";
 import Prismic from "prismic-javascript";
 import { Client } from "../prismic-configuration";
 import ProductCard from "../components/ProductCard";
 import SelectedProductCard from "../components/SelectedProductCard";
+import ShoppingCartContext from "../components/ShoppingCartContext";
+import ProductsContext from "../components/ProductsContext";
 
 const Shop = (props) => {
   const [isInitialized, setIsIntialized] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const { cart, additemToCart } = useContext(ShoppingCartContext);
+  const {
+    products,
+    selectedProduct,
+    categories,
+    createProductCatergories,
+    setProducts,
+    setSelectedProduct,
+  } = useContext(ProductsContext);
 
   useEffect(() => {
     if (!isInitialized) {
       setProducts(props.doc.results);
-      setSelectedProduct(products[0]);
+      createProductCatergories(props.doc.results);
+      setSelectedProduct(props.doc.results[0]);
     }
     setIsIntialized(true);
   }, []);
 
   const handleSelectedProduct = (productId) => {
-    let product = products.filter((item) => item.id === productId);
+    const product = products.filter((item) => item.id === productId);
     setSelectedProduct(product[0]);
   };
-
-  console.log(products[0]);
 
   return (
     <React.Fragment>
       <Layout>
-        <div className="flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
-          <h1>cart Total: $200</h1>
+        <div className="sticky top-0 flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
+          <h1>Cart Total: ${cart.cartTotal}</h1>
           <button className="addToCartButton">Checkout</button>
         </div>
         <div className="flex mt-12">
           {selectedProduct ? (
-            <SelectedProductCard item={selectedProduct} />
+            <SelectedProductCard
+              item={selectedProduct}
+              addToCart={additemToCart}
+            />
           ) : null}
         </div>
         <div className="">
-          <h1 className="p-6">Category 1</h1>
-          <div className="flex flex-wrap">
-            {products.map((product) => (
-              <ProductCard
-                item={product}
-                handleSelection={handleSelectedProduct}
-                key={product.uid}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="">
-          <h1 className="p-6">Category 2</h1>
-          <div className="flex flex-wrap">
-            {products.map((product) => (
-              <ProductCard
-                item={product}
-                handleSelection={handleSelectedProduct}
-                key={product.uid}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="">
-          <h1 className="p-6">Category 3</h1>
-          <div className="flex flex-wrap">
-            {products.map((product) => (
-              <ProductCard
-                item={product}
-                handleSelection={handleSelectedProduct}
-                key={product.uid}
-              />
-            ))}
-          </div>
+          {categories.map((category) => {
+            return (
+              <React.Fragment>
+                <h2 className="p-6 text-2xl">{category}</h2>
+                <div className="flex flex-wrap">
+                  {products.map((product) => {
+                    if (product.data.category[0].text === category) {
+                      return (
+                        <ProductCard
+                          item={product}
+                          handleSelection={handleSelectedProduct}
+                          key={product.uid}
+                        />
+                      );
+                    }
+                  })}
+                </div>
+              </React.Fragment>
+            );
+          })}
         </div>
       </Layout>
     </React.Fragment>
