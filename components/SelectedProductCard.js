@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SelectedProductCard = ({ item, addToCart }) => {
+  const [qty, setQty] = useState(1);
+
+  const incrementQty = () => {
+    let newQty = qty + 1;
+    setQty(newQty);
+  };
+
+  const decrementQty = () => {
+    let newQty = qty === 0 ? qty : qty - 1;
+    setQty(newQty);
+  };
+
   return (
-    <div className="selectedProductCard lg:max-w-xl mx-auto ">
+    <div className="selectedProductCard lg:max-w-xl mx-auto">
       <div className="flex-shrink-0">
         <img className="w-full object-cover" src={item.data.image.url} />
       </div>
@@ -17,11 +29,18 @@ const SelectedProductCard = ({ item, addToCart }) => {
             exercitationem praesentium nihil.
           </p>
         </div>
-        <div className="p-2 flex justify-around">
+        <div className="p-2 flex justify-around items-center">
           <p className="text-gray-900 text-xl">${item.data.price}</p>
+
+          <button onClick={() => decrementQty()}>Less</button>
+          <span>{qty}</span>
+          <button onClick={() => incrementQty()}>More</button>
           <button
-            className="addToCartButton"
-            onClick={() => addToCart(item.data.productID, 1)}
+            className={`addToCartButton ${
+              qty === 0 ? "disabled:opacity-75" : ""
+            }`}
+            disabled={qty === 0 ? "disabled" : null}
+            onClick={() => addToCart(item.id, qty)}
           >
             Add to Cart
           </button>

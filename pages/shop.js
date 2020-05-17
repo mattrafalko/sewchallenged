@@ -6,10 +6,11 @@ import ProductCard from "../components/ProductCard";
 import SelectedProductCard from "../components/SelectedProductCard";
 import ShoppingCartContext from "../components/ShoppingCartContext";
 import ProductsContext from "../components/ProductsContext";
+import CartInfo from "../components/CartInfo";
 
 const Shop = (props) => {
   const [isInitialized, setIsIntialized] = useState(false);
-  const { cart, additemToCart } = useContext(ShoppingCartContext);
+  const { additemToCart } = useContext(ShoppingCartContext);
   const {
     products,
     selectedProduct,
@@ -36,10 +37,7 @@ const Shop = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className="sticky top-0 flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
-          <h1>Cart Total: ${cart.cartTotal}</h1>
-          <button className="addToCartButton">Checkout</button>
-        </div>
+        <CartInfo />
         <div className="flex mt-12">
           {selectedProduct ? (
             <SelectedProductCard

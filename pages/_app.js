@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import App from "next/app";
 import ShoppingCartContext from "../components/ShoppingCartContext";
 import ProductsContext from "../components/ProductsContext";
+import CartModalContext from "../components/CartModalContext";
 
 function MyApp({ Component, pageProps }) {
   const [products, setProducts] = useState([]);
@@ -13,18 +14,24 @@ function MyApp({ Component, pageProps }) {
     cartItems: [],
     checkoutComplete: false,
   });
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => setModalOpen(!modalOpen);
 
   const additemToCart = (id, qty) => {
-    const item = products.filter((product) => product.productID === id);
-    const newCartTotal = cart.cartTotal + item[0].data.price * qty;
-    const newCartItems = [...cart.cartItems, item[0]];
-    console.log(newCartItems);
+    const { cartItems, cartTotal } = cart;
+    let item = products.filter((product) => product.id === id);
+    item[0] = { ...item[0], qty: qty };
+
+    const newCartTotal =
+      parseInt(cartTotal) + parseInt(item[0].data.price) * parseInt(qty);
+
+    const newCartItems = [...cartItems, item[0]];
     updateCart({
       ...cart,
       cartTotal: newCartTotal,
       cartItems: newCartItems,
     });
-    console.log(cart);
   };
 
   const createProductCatergories = (products) => {
@@ -34,20 +41,22 @@ function MyApp({ Component, pageProps }) {
   };
 
   return (
-    <ProductsContext.Provider
-      value={{
-        products,
-        selectedProduct,
-        categories,
-        createProductCatergories,
-        setProducts,
-        setSelectedProduct,
-      }}
-    >
-      <ShoppingCartContext.Provider value={{ cart, additemToCart }}>
-        <Component {...pageProps} />
-      </ShoppingCartContext.Provider>
-    </ProductsContext.Provider>
+    <CartModalContext.Provider value={{ modalOpen, toggleModal }}>
+      <ProductsContext.Provider
+        value={{
+          products,
+          selectedProduct,
+          categories,
+          createProductCatergories,
+          setProducts,
+          setSelectedProduct,
+        }}
+      >
+        <ShoppingCartContext.Provider value={{ cart, additemToCart }}>
+          <Component {...pageProps} />
+        </ShoppingCartContext.Provider>
+      </ProductsContext.Provider>
+    </CartModalContext.Provider>
   );
 }
 export default MyApp;
