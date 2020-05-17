@@ -1,17 +1,35 @@
 import React, { useContext } from "react";
-import Modal from "react-modal";
-import CartModalContext from "./CartModalContext";
-import ShoppingCartContext from "./ShoppingCartContext";
+import Layout from "../components/Layout";
+import ShoppingCartContext from "../components/ShoppingCartContext";
 import { Formik, Field, Form } from "formik";
 import Stripe from "stripe";
+import { parseCookies, setCookie } from "nookies";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
-export const getServerSideProps = async () => {
+const stripePromise = loadStripe(process.env.STRIPE_KEY);
+
+export const getServerSideProps = async (ctx) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET);
 
-  const paymentIntent = await stripe.paymentIntents.create({
+  let paymentIntent;
+
+  const { paymentIntentId } = await parseCookies(ctx);
+
+  if (paymentIntentId) {
+    paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+    return {
+      props: { paymentIntent },
+    };
+  }
+
+  paymentIntent = await stripe.paymentIntents.create({
     amount: 1000,
     currency: "USD",
   });
+
+  setCookie(ctx, "paymentIntentID", paymentIntent.id);
 
   return {
     props: {
@@ -20,43 +38,40 @@ export const getServerSideProps = async () => {
   };
 };
 
-const CartModal = (props) => {
-  Modal.setAppElement("#__next");
-  const { modalOpen, toggleModal } = useContext(CartModalContext);
+const Checkout = (props) => {
   const { cart } = useContext(ShoppingCartContext);
 
   return (
-    <div className="">
-      <Modal isOpen={modalOpen} onRequestClose={() => toggleModal()}>
-        <div className="flex justify-end">
-          <button onClick={() => toggleModal()}>Close</button>
-        </div>
-        <div className="flex">
-          <div className="flex flex-col h-full flex-1">
-            <div>
-              <h3>Your Order</h3>
-            </div>
-
-            <div className="flex justify-between">
-              <span>Item</span>
-              <span>Price</span>
-              <span>Quantity</span>
-              <span>Total Cost</span>
-            </div>
-            {cart.cartItems.map((item) => (
-              <div className="flex justify-between">
-                <span>{item.data.name[0].text}</span>
-                <span>${item.data.price}</span>
-                <span>{item.qty}</span>
-                <span>total: ${item.qty * item.data.price}</span>
-              </div>
-            ))}
-            <div>
-              <h3>Cart Total: ${cart.cartTotal}</h3>
-            </div>
-            <pre>{JSON.stringify(props, null, 2)}</pre>
+    <Layout>
+      <div className="flex justify-end"></div>
+      <div className="flex">
+        <div className="flex flex-col h-full flex-1">
+          <div>
+            <h3>Your Order</h3>
           </div>
-          <div className="flex flex-col items-center h-full flex-1">
+
+          <div className="flex justify-between">
+            <span>Item</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Total Cost</span>
+          </div>
+          {cart.cartItems.map((item) => (
+            <div className="flex justify-between">
+              <span>{item.data.name[0].text}</span>
+              <span>${item.data.price}</span>
+              <span>{item.qty}</span>
+              <span>total: ${item.qty * item.data.price}</span>
+            </div>
+          ))}
+          <div>
+            <h3>Cart Total: ${cart.cartTotal}</h3>
+          </div>
+
+          <pre>{JSON.stringify(props, null, 2)}</pre>
+        </div>
+        <div className="flex flex-col items-center h-full flex-1">
+          <Elements stripe={stripePromise}>
             <Formik
               initialValues={{
                 email: "",
@@ -377,11 +392,11 @@ const CartModal = (props) => {
                 </Form>
               )}
             </Formik>
-          </div>
+          </Elements>
         </div>
-      </Modal>
-    </div>
+      </div>
+    </Layout>
   );
 };
 
-export default CartModal;
+export default Checkout;

@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import ShoppingCartContext from "./ShoppingCartContext";
 import CartModal from "./CartModal";
 import CartModalContext from "./CartModalContext";
+import Link from "next/link";
 
 const CartInfo = () => {
   const { cart } = useContext(ShoppingCartContext);
-  const { toggleModal } = useContext(CartModalContext);
+  //const { toggleModal } = useContext(CartModalContext);
 
   return (
     <React.Fragment>
@@ -13,10 +14,12 @@ const CartInfo = () => {
         <h1>Cart Total: ${cart.cartTotal}</h1>
         <button
           className="addToCartButton"
-          onClick={() => toggleModal()}
+          //onClick={() => toggleModal()}
           disabled={cart.cartItems.length <= 0 ? "disabled" : ""}
         >
-          Checkout
+          <Link href="/checkout">
+            <a>Checkout</a>
+          </Link>
         </button>
       </div>
       <CartModal />
