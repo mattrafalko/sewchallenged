@@ -8,13 +8,19 @@ const CartInfo = () => {
   const { toggleModal } = useContext(CartModalContext);
 
   return (
-    <div className="sticky top-0 flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
-      <h1>Cart Total: ${cart.cartTotal}</h1>
-      <button className="addToCartButton" onClick={() => toggleModal()}>
-        Checkout
-      </button>
+    <React.Fragment>
+      <div className="sticky top-0 flex justify-between p-6 rounded-lg bg-pink-200 items-center w-full">
+        <h1>Cart Total: ${cart.cartTotal}</h1>
+        <button
+          className="addToCartButton"
+          onClick={() => toggleModal()}
+          disabled={cart.cartItems.length <= 0 ? "disabled" : ""}
+        >
+          Checkout
+        </button>
+      </div>
       <CartModal />
-    </div>
+    </React.Fragment>
   );
 };
 

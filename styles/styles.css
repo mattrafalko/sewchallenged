@@ -78,3 +78,9 @@ a {
 .sidebar > li {
   @apply mb-4;
 }
+
+input {
+  @apply bg-pink-100;
+  @apply border;
+  @apply border-black;
+}
