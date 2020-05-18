@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { destroyCookies } from "nookies";
 import axios from "axios";
 
 const CheckoutForm = ({ price, description }) => {
@@ -73,14 +72,14 @@ const CheckoutForm = ({ price, description }) => {
         }}
       >
         {({ values, isSubmitting }) => (
-          <Form class="max-w-lg w-full">
+          <Form class="max-w-lg w-full border rounded p-6">
             <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="mb-6 px-3 w-full md:w-1/2 md:mb-0">
+              <div class="mb-6 px-3 w-full md:mb-0">
                 <label
                   class="block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase"
                   for="grid-first-name"
                 >
-                  First Name
+                  Name
                 </label>
 
                 <Field
@@ -340,9 +339,16 @@ const CheckoutForm = ({ price, description }) => {
                 </div>
               </div>
             </div>
-            <CardElement />
-            <button type="submit" disabled={isSubmitting || !stripe}>
-              Place Order
+            <div>
+              <CardElement />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting || !stripe}
+              class="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full"
+            >
+              <span class="mx-auto">Place Order</span>
             </button>
           </Form>
         )}

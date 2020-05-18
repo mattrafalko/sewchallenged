@@ -11,14 +11,11 @@ export default function Header() {
   };
 
   return (
-    <div className="sticky top-0 bottom-0 p-6 bg-pink-200 lg:hidden">
+    <div className="sticky top-0 bottom-0 p-6 bg-green-500 lg:hidden">
       <header className="flex justify-between items-center">
         <h1 className="text-3xl text-pink-700 font-extrabold">
           <Link href="/">
-            <a>
-              <span className="text-pink-500">Sew</span>
-              <span>Challenged</span>
-            </a>
+            <a>SewChallenged</a>
           </Link>
         </h1>
         <div>

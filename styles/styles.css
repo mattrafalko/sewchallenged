@@ -11,10 +11,6 @@ p {
   @apply mt-3;
 }
 
-a {
-  @apply text-pink-700;
-}
-
 /*Blog Post Cards - index*/
 .card {
   @apply flex;

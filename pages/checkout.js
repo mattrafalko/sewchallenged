@@ -19,29 +19,38 @@ const Checkout = () => {
 
   return (
     <Layout>
-      <div className="flex justify-end"></div>
-      <div className="flex">
-        <div className="flex flex-col h-full flex-1">
+      <div className="flex lg:flex-row flex-col border rounded p-6">
+        <div className="flex flex-col h-full justify-between flex-1 max-w-lg mx-auto">
           <div>
-            <h3>Your Order</h3>
+            <h3 className="text-5xl font-extrabold tracking-wide">
+              Your Order
+            </h3>
           </div>
 
-          <div className="flex justify-between">
-            <span>Item</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Total Cost</span>
+          <div className="">
+            {cart.cartItems.map((item, i) => (
+              <div className="flex-col flex border-b-2 hover:border-green-300 border-gray-200 mb-3">
+                <div
+                  key={i}
+                  className="flex justify-between font-semibold text-xl mt-3"
+                >
+                  <div>
+                    <span className="">{item.data.name[0].text}</span>
+                  </div>
+                  <div>
+                    <span className="">
+                      ${item.data.price} x {item.qty}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          {cart.cartItems.map((item) => (
-            <div className="flex justify-between">
-              <span>{item.data.name[0].text}</span>
-              <span>${item.data.price}</span>
-              <span>{item.qty}</span>
-              <span>${item.qty * item.data.price}</span>
-            </div>
-          ))}
+
           <div>
-            <h3>Cart Total: ${cart.cartTotal}</h3>
+            <h3 className="mt-4 text-3xl text-right">
+              Cart Total: ${cart.cartTotal}
+            </h3>
           </div>
         </div>
         <Elements stripe={stripePromise}>

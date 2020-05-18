@@ -5,14 +5,11 @@ import NavLinks from "./NavLinks";
 
 function SideNavigation() {
   return (
-    <div className="px-6 bg-green-400 min-h-screen sticky top-0 flex flex-col justify-between">
+    <div className="px-6 bg-green-500 min-h-screen sticky top-0 flex flex-col justify-between">
       <div className="mt-8">
-        <div className="xl:text-4xl lg:text-3xl text-pink-700 font-extrabold w-full">
+        <div className="xl:text-4xl lg:text-3xl text-white font-extrabold w-full">
           <Link href="/">
-            <a>
-              <span className="text-pink-500">Sew</span>
-              <span>Challenged</span>
-            </a>
+            <a>SewChallenged</a>
           </Link>
         </div>
         <NavLinks />
