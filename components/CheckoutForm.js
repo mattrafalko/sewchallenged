@@ -1,16 +1,14 @@
-import React, { useState, useContext, StrictMode } from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { destroyCookies } from "nookies";
+import axios from "axios";
 
-const CheckoutForm = ({ paymentIntent }) => {
+const CheckoutForm = ({ price, description }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [transcationStatus, setTransactionStatus] = useState();
-
-  if (transcationStatus)
-    return <div>{JSON.stringify(transcationStatus, null, 2)}</div>;
 
   return (
     <div className="flex flex-col items-center h-full flex-1">
@@ -42,31 +40,35 @@ const CheckoutForm = ({ paymentIntent }) => {
           sameAsShipping: true,
         }}
         onSubmit={async (data, { setSubmitting }) => {
-          setSubmitting(stripe);
+          setSubmitting(true);
 
           try {
-            const {
-              error,
-              paymentIntent: { status },
-            } = await stripe.confirmCardPayment(paymentIntent.client_secret, {
-              payment_method: {
-                card: elements.getElement(CardElement),
-                billing_details: { ...data.billing },
-              },
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+              type: "card",
+              card: elements.getElement(CardElement),
+              billing_details: { ...data.billing },
             });
 
             if (error) throw new Error(error.message);
 
-            if (status === "succeeded") {
-              console.log(status);
-              destroyCookies("paymentIntentID", null);
+            if (!error) {
+              try {
+                const response = await axios.post("/api/charge", {
+                  id: paymentMethod.id,
+                  amount: price * 100,
+                  description: JSON.stringify(description),
+                });
+                console.log(response);
+              } catch (error) {
+                console.log(error);
+              }
             }
           } catch (err) {
-            setTransactionStatus(err);
             console.log(err);
+            setTransactionStatus(err);
           } finally {
-            setSubmitting(stripe);
-            setTransactionStatus(status);
+            setSubmitting(false);
+            setTransactionStatus(true);
           }
         }}
       >
@@ -339,11 +341,9 @@ const CheckoutForm = ({ paymentIntent }) => {
               </div>
             </div>
             <CardElement />
-            <button type="submit" disabled={isSubmitting}>
-              {" "}
-              Submit{" "}
+            <button type="submit" disabled={isSubmitting || !stripe}>
+              Place Order
             </button>
-            <pre>{JSON.stringify(paymentIntent, null, 2)}</pre>
           </Form>
         )}
       </Formik>

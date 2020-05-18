@@ -1,45 +1,22 @@
 import React, { useContext } from "react";
 import Layout from "../components/Layout";
 import ShoppingCartContext from "../components/ShoppingCartContext";
-import Stripe from "stripe";
-import { parseCookies, setCookie } from "nookies";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 
 const stripePromise = loadStripe(process.env.STRIPE_KEY);
 
-export const getServerSideProps = async (ctx) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET);
-  let paymentIntent;
-  const { paymentIntentId } = await parseCookies(ctx);
-
-  if (paymentIntentId) {
-    paymentIntent = stripe.paymentIntents.retrieve(paymentIntentId);
-    return {
-      props: { paymentIntent },
-    };
-  }
-
-  let { cart } = parseCookies(ctx);
-
-  paymentIntent = await stripe.paymentIntents.create({
-    currency: "USD",
-    amount: cart.cartTotal * 100,
-    description: cart.cartItems,
-  });
-
-  setCookie(ctx, "paymentIntentID", paymentIntent.id);
-
-  return {
-    props: {
-      paymentIntent,
-    },
-  };
-};
-
-const Checkout = ({ paymentIntent }) => {
+const Checkout = () => {
   const { cart } = useContext(ShoppingCartContext);
+
+  const paymentDescription = cart.cartItems.map((item) => ({
+    item: item.data.name[0].text,
+    description: item.data.description[0].text,
+    quantity: item.qty,
+    price: item.data.price,
+  }));
+
   return (
     <Layout>
       <div className="flex justify-end"></div>
@@ -66,10 +43,12 @@ const Checkout = ({ paymentIntent }) => {
           <div>
             <h3>Cart Total: ${cart.cartTotal}</h3>
           </div>
-          <pre>{JSON.stringify(paymentIntent, null, 2)}</pre>
         </div>
         <Elements stripe={stripePromise}>
-          <CheckoutForm paymentIntent={paymentIntent} />
+          <CheckoutForm
+            price={cart.cartTotal}
+            description={paymentDescription}
+          />
         </Elements>
       </div>
     </Layout>

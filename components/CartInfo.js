@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import ShoppingCartContext from "./ShoppingCartContext";
 import Link from "next/link";
-import { setCookie } from "nookies";
 
 const CartInfo = () => {
   const { cart } = useContext(ShoppingCartContext);
@@ -13,7 +12,6 @@ const CartInfo = () => {
         <button
           className="addToCartButton"
           disabled={cart.cartItems.length <= 0 ? "disabled" : ""}
-          onClick={() => setCookie(ctx, "cart", cart)}
         >
           <Link href="/checkout">
             <a>Checkout</a>
