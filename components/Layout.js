@@ -11,7 +11,7 @@ const Layout = (props) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Header />
-    <div className="flex">
+    <div className="flex bg-gray-100">
       <div className="flex lg:block hidden">
         <SideNavigation />
       </div>

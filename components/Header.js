@@ -11,9 +11,9 @@ export default function Header() {
   };
 
   return (
-    <div className="sticky top-0 bottom-0 p-6 bg-green-500 lg:hidden">
+    <div className="sticky top-0 bottom-0 p-6 bg-gray-500 lg:hidden">
       <header className="flex justify-between items-center">
-        <h1 className="text-3xl text-pink-700 font-extrabold">
+        <h1 className="text-3xl font-extrabold">
           <Link href="/">
             <a>SewChallenged</a>
           </Link>
