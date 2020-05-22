@@ -3,12 +3,31 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+.html {
+  @apply antialiased;
+  scroll-behavior: smooth;
+}
+
+p > a {
+  @apply text-gray-900;
+  @apply underline;
+}
+
 p {
-  @apply mb-2;
-  @apply text-xl;
+  @apply mt-6;
   @apply leading-6;
   @apply text-base;
-  @apply mt-3;
+  @apply text-lg;
+  @apply text-justify;
+  @apply tracking-normal;
+  @apply font-medium;
+}
+
+li {
+  @apply list-disc;
+  @apply m-2;
+  @apply p-2;
 }
 
 /*Blog Post Cards - index*/
@@ -20,13 +39,17 @@ p {
   @apply overflow-hidden;
   @apply mb-8;
   @apply mx-auto;
+  @apply border-gray-200;
 }
 
 .card:hover {
-  transform: translate(0, -2%);
-  transition-timing-function: ease-in-out;
-  transition: 0.2s;
+  /* transform: translate(0, -2%); */
+  /* transition-timing-function: ease-in-out;
+  transition: 0.2s; */
   @apply shadow-xl;
+  @apply transition;
+  @apply ease-out;
+  @apply duration-700;
 }
 
 .cardBody {

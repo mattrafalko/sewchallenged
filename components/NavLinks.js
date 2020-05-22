@@ -1,26 +1,20 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 const NavLinks = () => {
   return (
-    <div>
-      <ul className="sidebar lg:text-2xl mt-3">
-        <li className="">
-          <Link href="/">
-            <a className="text-white ">Home</a>
-          </Link>
-        </li>
-        <li className="">
-          <Link href="/shop">
-            <a className="text-white "> Shop</a>
-          </Link>
-        </li>
-        <li className="">
-          <Link href="/about">
-            <a className="text-white ">About</a>
-          </Link>
-        </li>
-      </ul>
+    <div className='sidebar text-2xl mt-3 space-y-3'>
+      <Link href='/'>
+        <a className='text-white '>Home</a>
+      </Link>
+
+      <Link href='/shop'>
+        <a className='text-white '> Shop</a>
+      </Link>
+
+      <Link href='/about'>
+        <a className='text-white '>About</a>
+      </Link>
     </div>
   );
 };
