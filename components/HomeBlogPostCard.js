@@ -1,9 +1,9 @@
-import React from "react";
-import { RichText } from "prismic-reactjs";
-import moment from "moment";
-import Link from "next/link";
+import React from 'react';
+import { RichText } from 'prismic-reactjs';
+import moment from 'moment';
+import Link from 'next/link';
 
-const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date }) => {
+const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date, tags }) => {
   const blogDate = moment(date)
     .toDate()
     .toLocaleDateString();
@@ -14,20 +14,29 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date }) => {
   return (
     <React.Fragment>
       <Link href={`/blog/${uid}`}>
-        <div className="card lg:max-w-none lg:mx-4 ">
-          <div className="flex-shrink-0">
-            <img className="h-64 w-full object-cover" src={imgUrl} />
+        <div className='card lg:max-w-md lg:mx-4 '>
+          <div className='flex-shrink-0'>
+            <img className='object-cover w-full h-auto' src={imgUrl} />
           </div>
 
-          <div className="cardBody">
+          <div className='cardBody'>
             <div>
-              <p className="text-sm leading-5 font-medium">Tags</p>
-              <h2 className="mt-2 text-xl leading-7 font-semibold">
-                <a className="">{RichText.asText(blogTitle)}</a>
+              <div className='flex space-x-3'>
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className='px-2 py-0.5 bg-gray-400 text-gray-100 rounded-full'
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h2 className='mt-2 text-xl leading-7 font-semibold'>
+                <a className=''>{RichText.asText(blogTitle)}</a>
               </h2>
             </div>
 
-            <div className="cardDate">
+            <div className='cardDate'>
               <time>
                 Posted on {blogDate} at {blogTime}
               </time>

@@ -9,6 +9,10 @@
   scroll-behavior: smooth;
 }
 
+h1 {
+  @apply font-sans;
+}
+
 p > a {
   @apply text-gray-900;
   @apply underline;

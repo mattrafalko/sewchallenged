@@ -1,7 +1,7 @@
-import React from "react";
-import Layout from "../../components/Layout";
-import { Client, linkResolver } from "../../prismic-configuration";
-import { RichText } from "prismic-reactjs";
+import React from 'react';
+import Layout from '../../components/Layout';
+import { Client, linkResolver } from '../../prismic-configuration';
+import { RichText } from 'prismic-reactjs';
 
 const Post = (props) => {
   const { data } = props.doc;
@@ -9,14 +9,14 @@ const Post = (props) => {
   return (
     <div>
       <Layout>
-        <div className="p-3 mb-3 rounded-lg bg-pink-200 items-center">
-          <h1 className="text-3xl mb-3">{RichText.asText(data.blogtitle)}</h1>
+        <div className='p-3 mb-3 rounded-lg tems-center text-3xl font-bold'>
+          <h2 className='text-3xl mb-3'>{RichText.asText(data.blogtitle)}</h2>
         </div>
-        <div className="overflow-hidden border rounded-lg shadow-xl flex flex-col justify-between ">
-          <div className="mx-auto">
-            <img className="" src={data.image.url} />
+        <div className='overflow-hidden flex flex-col justify-between '>
+          <div className='max-w-lg'>
+            <img className=' object-cover w-full h-auto' src={data.image.url} />
           </div>
-          <div className="p-6">
+          <div className='p-6'>
             <RichText render={data.blogbody} linkResolver={linkResolver} />
           </div>
         </div>
@@ -28,7 +28,7 @@ const Post = (props) => {
 Post.getInitialProps = async (context) => {
   const { req } = context;
   const { id } = context.query;
-  const res = await Client(req).getByUID("blog", id);
+  const res = await Client(req).getByUID('blog', id);
   return {
     doc: res,
   };
