@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(process.env.STRIPE_KEY);
 
 const CheckoutForm = ({ price, description }) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [transcationStatus, setTransactionStatus] = useState();
 
   return (
     <div className='flex flex-col items-center h-full flex-1'>
@@ -42,40 +43,18 @@ const CheckoutForm = ({ price, description }) => {
           setSubmitting(true);
 
           try {
-            const { error, paymentMethod } = await stripe.createPaymentMethod({
-              type: 'card',
-              card: elements.getElement(CardElement),
-              billing_details: { ...data.billing },
-              metadata: {
-                ...data.shipping,
-              },
-              //receipt_email: data.billing.email,
-              // shipping: {
-              //   address: { ...data.shipping.address },
-              //   name: data.shipping.name,
-              // },
+            const response = await axios.post('/api/createSession', {
+              billing: { ...data.billing },
+              shipping: { ...data.shipping },
             });
+            console.log(response);
 
-            if (error) throw new Error(error.message);
-
-            if (!error) {
-              try {
-                const response = await axios.post('/api/charge', {
-                  id: paymentMethod.id,
-                  amount: price * 100,
-                  description: JSON.stringify(description),
-                });
-                console.log(response);
-              } catch (error) {
-                console.log(error);
-              }
-            }
-          } catch (err) {
-            console.log(err);
-            setTransactionStatus(err);
-          } finally {
-            setSubmitting(false);
-            setTransactionStatus(true);
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({
+              sessionId: response.data.id,
+            });
+          } catch (error) {
+            console.log(error);
           }
         }}
       >
