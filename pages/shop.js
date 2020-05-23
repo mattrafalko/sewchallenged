@@ -45,7 +45,7 @@ const Shop = ({ stripeProducts }) => {
             />
           ) : null}
         </div>
-        <div className=''>
+        <div className=' bg-gray-100 my-6 rounded-lg'>
           {categories.map((category) => {
             return (
               <React.Fragment>

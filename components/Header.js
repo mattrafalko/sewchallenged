@@ -21,19 +21,19 @@ export default function Header() {
             </Link>
           </h1>
         </div>
-        <NavLinks className='hidden md:block' />
-        <div className='lg:hidden'>
+
+        <div>
           <button onClick={() => toggleMenu()}>
             <MenuButton />
           </button>
         </div>
       </header>
       {menuOpen ? (
-        <div className='flex flex-col text-right'>
-          <React.Fragment className='w-24'>
+        <div className='mx-auto max-w-screen-xl'>
+          <div className=''>
             <NavLinks />
             <SocialMediaLinks />
-          </React.Fragment>
+          </div>
         </div>
       ) : null}
     </div>

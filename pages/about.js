@@ -9,10 +9,10 @@ const About = (props) => {
   return (
     <React.Fragment>
       <Layout>
-        <div className=' p-2 max-w-2xl'>
-          <div className='text-3xl font-extrabold tracking-wide'>
+        <div className='p-6 mx-auto max-w-4xl bg-white min-h-full rounded shadow-xl'>
+          <div className='text-5xl font-extrabold tracking-wide'>
             <RichText render={data.title} />
-            <div className='leading-5 text-xl'>
+            <div>
               <RichText render={data.content} linkResolver={linkResolver} />
             </div>
           </div>

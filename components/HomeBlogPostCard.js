@@ -14,7 +14,7 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date, tags }) => {
   return (
     <React.Fragment>
       <Link href={`/blog/${uid}`}>
-        <div className='card lg:max-w-md lg:mx-4 '>
+        <div className='card lg:max-w-md lg:mx-4 bg-white'>
           <div className='flex-shrink-0'>
             <img className='object-cover w-full h-auto' src={imgUrl} />
           </div>
@@ -31,7 +31,7 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date, tags }) => {
                   </span>
                 ))}
               </div>
-              <h2 className='mt-2 text-xl leading-7 font-semibold'>
+              <h2 className='mt-2 text-2xl leading-7 font-semibold'>
                 <a className=''>{RichText.asText(blogTitle)}</a>
               </h2>
             </div>

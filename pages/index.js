@@ -21,11 +21,9 @@ const Home = (props) => {
   });
 
   return (
-    <React.Fragment>
-      <Layout>
-        <div className='flex flex-wrap'>{posts}</div>
-      </Layout>
-    </React.Fragment>
+    <Layout>
+      <div className='flex flex-wrap'>{posts}</div>
+    </Layout>
   );
 };
 

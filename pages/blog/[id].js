@@ -12,7 +12,7 @@ const Post = (props) => {
         <div className='p-3 mb-3 rounded-lg tems-center text-3xl font-bold'>
           <h2 className='text-3xl mb-3'>{RichText.asText(data.blogtitle)}</h2>
         </div>
-        <div className='overflow-hidden flex flex-col justify-between '>
+        <div className='overflow-hidden flex flex-col justify-between'>
           <div className='max-w-lg'>
             <img className=' object-cover w-full h-auto' src={data.image.url} />
           </div>
