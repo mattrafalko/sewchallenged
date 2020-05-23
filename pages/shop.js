@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import Layout from "../components/Layout";
-import Prismic from "prismic-javascript";
-import { Client } from "../prismic-configuration";
-import ProductCard from "../components/ProductCard";
-import SelectedProductCard from "../components/SelectedProductCard";
-import ShoppingCartContext from "../components/ShoppingCartContext";
-import ProductsContext from "../components/ProductsContext";
-import CartInfo from "../components/CartInfo";
+import React, { useState, useEffect, useContext } from 'react';
+import Layout from '../components/Layout';
+import Prismic from 'prismic-javascript';
+import { Client } from '../prismic-configuration';
+import ProductCard from '../components/ProductCard';
+import SelectedProductCard from '../components/SelectedProductCard';
+import ShoppingCartContext from '../components/ShoppingCartContext';
+import ProductsContext from '../components/ProductsContext';
+import CartInfo from '../components/CartInfo';
+import Stripe from 'stripe';
 
-const Shop = (props) => {
+const Shop = ({ stripeProducts }) => {
   const [isInitialized, setIsIntialized] = useState(false);
   const { additemToCart } = useContext(ShoppingCartContext);
   const {
@@ -22,15 +23,15 @@ const Shop = (props) => {
 
   useEffect(() => {
     if (!isInitialized) {
-      setProducts(props.doc.results);
-      createProductCatergories(props.doc.results);
-      setSelectedProduct(props.doc.results[0]);
+      setProducts(stripeProducts);
+      createProductCatergories(stripeProducts);
+      setSelectedProduct(stripeProducts[0]);
     }
     setIsIntialized(true);
   }, []);
 
   const handleSelectedProduct = (productId) => {
-    const product = products.filter((item) => item.id === productId);
+    const product = stripeProducts.filter((item) => item.id === productId);
     setSelectedProduct(product[0]);
   };
 
@@ -38,7 +39,7 @@ const Shop = (props) => {
     <React.Fragment>
       <Layout>
         <CartInfo />
-        <div className="flex mt-12">
+        <div className='flex mt-12'>
           {selectedProduct ? (
             <SelectedProductCard
               item={selectedProduct}
@@ -46,19 +47,19 @@ const Shop = (props) => {
             />
           ) : null}
         </div>
-        <div className="">
+        <div className=''>
           {categories.map((category) => {
             return (
               <React.Fragment>
-                <h2 className="p-6 text-2xl">{category}</h2>
-                <div className="flex flex-wrap">
-                  {products.map((product) => {
-                    if (product.data.category[0].text === category) {
+                <h2 className='p-6 text-2xl'>{category}</h2>
+                <div className='flex flex-wrap'>
+                  {stripeProducts.map((product) => {
+                    if (product.metadata.Category === category) {
                       return (
                         <ProductCard
                           item={product}
                           handleSelection={handleSelectedProduct}
-                          key={product.uid}
+                          key={product.id}
                         />
                       );
                     }
@@ -73,13 +74,18 @@ const Shop = (props) => {
   );
 };
 
-Shop.getInitialProps = async (context) => {
-  const req = context.req;
-  const query = Prismic.Predicates.at("document.type", "product");
-  const res = await Client(req).query(query);
-  return {
-    doc: res,
-  };
+Shop.getInitialProps = async () => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET);
+  const { data } = await stripe.products.list();
+  const prices = await stripe.prices.list();
+
+  let products = data.map((item) => {
+    let itemPrice = prices.data.filter((price) => price.product === item.id);
+    itemPrice = itemPrice[0];
+    return { ...item, price: itemPrice.unit_amount, priceId: itemPrice.id };
+  });
+
+  return { stripeProducts: [...products] };
 };
 
 export default Shop;

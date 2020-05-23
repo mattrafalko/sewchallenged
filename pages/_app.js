@@ -1,8 +1,8 @@
-import "../styles/styles.css";
-import React, { useState } from "react";
-import App from "next/app";
-import ShoppingCartContext from "../components/ShoppingCartContext";
-import ProductsContext from "../components/ProductsContext";
+import '../styles/styles.css';
+import React, { useState } from 'react';
+import App from 'next/app';
+import ShoppingCartContext from '../components/ShoppingCartContext';
+import ProductsContext from '../components/ProductsContext';
 
 function MyApp({ Component, pageProps }) {
   const [products, setProducts] = useState([]);
@@ -20,8 +20,9 @@ function MyApp({ Component, pageProps }) {
     item[0] = { ...item[0], qty: qty };
 
     const newCartTotal =
-      parseInt(cartTotal) + parseInt(item[0].data.price) * parseInt(qty);
+      parseInt(cartTotal) + (parseInt(item[0].price) * parseInt(qty)) / 100;
 
+    console.log(newCartTotal);
     const newCartItems = [...cartItems, item[0]];
     updateCart({
       ...cart,
@@ -31,7 +32,7 @@ function MyApp({ Component, pageProps }) {
   };
 
   const createProductCatergories = (products) => {
-    let categories = products.map((item) => item.data.category[0].text);
+    let categories = products.map((item) => item.metadata.Category);
     let productCategories = [...new Set(categories)];
     setCategories(productCategories);
   };

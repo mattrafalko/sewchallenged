@@ -16,15 +16,12 @@ const SelectedProductCard = ({ item, addToCart }) => {
   return (
     <div className='flex flex-wrap md:flex-no-wrap max-w-full'>
       <div className='rounded-lg overflow-hidden'>
-        <img
-          className=' w-full h-full object-cover '
-          src={item.data.image.url}
-        />
+        <img className=' w-full h-full object-cover ' src={item.image} />
       </div>
       <div className='p-4 flex flex-col justify-between'>
         <div className=''>
           <div className='text-gray-900 font-extrabold tracking-wide text-3xl'>
-            {item.data.description[0].text}
+            {item.desription}
           </div>
           <p className='text-gray-700 tracking-tight leading-tight'>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -36,7 +33,7 @@ const SelectedProductCard = ({ item, addToCart }) => {
         <div className='p-2 flex flex-col justify-around my-auto'>
           <div>
             <span className='text-gray-900 text-xl md:text-2xl font-bold'>
-              ${item.data.price}
+              ${item.price / 100}
             </span>
           </div>
 
