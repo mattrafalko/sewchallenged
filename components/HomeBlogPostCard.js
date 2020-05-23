@@ -25,7 +25,7 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date, tags }) => {
                 {tags.map((tag) => (
                   <span
                     key={tag}
-                    className='px-2 py-0.5 bg-gray-400 text-gray-100 rounded-full'
+                    className='px-2 py-0.5 bg-teal-400 text-gray-100 rounded-full'
                   >
                     {tag}
                   </span>

@@ -12,8 +12,8 @@ const Checkout = () => {
 
   return (
     <Layout>
-      <div className='flex lg:flex-row flex-col border rounded p-6'>
-        <div className='flex flex-col h-full justify-between flex-1 max-w-lg mx-auto'>
+      <div className='flex lg:flex-row flex-col border rounded p-6 shadow-lg'>
+        <div className='flex flex-col justify-between mb-6 w-1/2'>
           <div>
             <h3 className='text-5xl font-extrabold tracking-wide'>
               Your Order
@@ -32,7 +32,7 @@ const Checkout = () => {
                   </div>
                   <div>
                     <span className=''>
-                      ${item.price} x {item.qty}
+                      ${item.price / 100} x {item.qty}
                     </span>
                   </div>
                 </div>
@@ -41,11 +41,12 @@ const Checkout = () => {
           </div>
 
           <div>
-            <h3 className='mt-4 text-3xl text-right'>
+            <h3 className='mt-4 text-3xl text-left'>
               Cart Total: ${cart.cartTotal}
             </h3>
           </div>
         </div>
+
         <Elements stripe={stripePromise}>
           <CheckoutForm total={cart.cartTotal} items={cart.cartItems} />
         </Elements>

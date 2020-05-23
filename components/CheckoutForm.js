@@ -63,8 +63,8 @@ const CheckoutForm = ({ total, items }) => {
         }}
       >
         {({ values, errors, touched }) => (
-          <Form class='max-w-lg w-full border rounded p-6'>
-            <div class='flex flex-wrap -mx-3 mb-6'>
+          <Form class='max-w-lg w-full border rounded p-6 shadow-inner'>
+            <div class='flex flex-wrap mb-6'>
               <div class='mb-6 px-3 w-full md:mb-0'>
                 <label
                   class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
@@ -83,13 +83,13 @@ const CheckoutForm = ({ total, items }) => {
                 />
                 <div className=''>
                   {errors.name && touched.name ? (
-                    <p class='text-xs'>{errors.name}</p>
+                    <p class='text-sm'>{errors.name}</p>
                   ) : null}
                 </div>
               </div>
             </div>
-            <div class='flex flex-wrap -mx-3 mb-6'>
-              <div class='px-3 w-full'>
+            <div class='flex flex-wrap'>
+              <div class='mb-6 px-3 w-full md:mb-0'>
                 <label
                   class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
                   for='grid-email'
@@ -105,11 +105,12 @@ const CheckoutForm = ({ total, items }) => {
                   name='email'
                   placeholder='Email'
                 />
-              </div>
-              <div className=''>
-                {errors.email && touched.email ? (
-                  <p class='text-xs '>{errors.email}</p>
-                ) : null}
+
+                <div className=''>
+                  {errors.email && touched.email ? (
+                    <p class='text-sm '>{errors.email}</p>
+                  ) : null}
+                </div>
               </div>
             </div>
 
@@ -120,7 +121,7 @@ const CheckoutForm = ({ total, items }) => {
                   ? 'disabled'
                   : ''
               }
-              class={`bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full ${
+              class={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full ${
                 (errors && !values.email) || (errors && !values.name)
                   ? ' cursor-not-allowed'
                   : ''

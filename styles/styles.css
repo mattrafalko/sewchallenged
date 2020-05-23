@@ -7,9 +7,6 @@
 .html {
   @apply antialiased;
   scroll-behavior: smooth;
-}
-
-h1 {
   @apply font-sans;
 }
 
@@ -85,12 +82,16 @@ li {
 }
 
 .addToCartButton {
-  @apply text-lg;
-  @apply text-white;
-  @apply bg-pink-700;
-  @apply rounded-lg;
-  @apply px-2;
-  @apply py-1;
+  @apply text-gray-100;
+  @apply bg-teal-600;
+  @apply rounded-full;
+  @apply px-4;
+  @apply py-3;
+  @apply text-xl;
+}
+
+.addToCartButton:hover {
+  @apply bg-teal-500;
 }
 
 .sidebar {
@@ -106,4 +107,36 @@ input {
   @apply bg-pink-100;
   @apply border;
   @apply border-black;
+}
+
+.navLinks {
+  @apply px-3;
+  @apply py-2;
+  @apply border-b-4;
+  @apply border-white;
+}
+
+.navLinks:hover {
+  @apply transition;
+  @apply ease-in-out;
+  @apply duration-700;
+  @apply border-teal-400;
+  @apply border-b-4;
+}
+
+.siteHeader {
+  @apply text-5xl;
+  @apply font-extrabold;
+  @apply text-gray-900;
+}
+
+.siteHeader:hover {
+  @apply transition;
+  @apply ease-in-out;
+  @apply text-teal-500;
+  @apply duration-300;
+}
+
+button {
+  @apply select-none;
 }

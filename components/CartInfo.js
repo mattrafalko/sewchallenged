@@ -7,8 +7,8 @@ const CartInfo = () => {
 
   return (
     <React.Fragment>
-      <div className=' flex justify-between p-6 rounded-lg bg-gray-200 items-center w-full'>
-        <span className='flex'>
+      <div className=' flex justify-between shadow-inner p-6 rounded-lg bg-gray-200 items-center w-full'>
+        <span className='flex text-xl space-x-4 items-center'>
           <svg
             width='24'
             height='24'
@@ -31,10 +31,10 @@ const CartInfo = () => {
               fill='currentColor'
             />
           </svg>{' '}
-          ${cart.cartTotal}
+          <span>${cart.cartTotal}</span>
         </span>
         <button
-          className='bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2  border rounded-full text-xl'
+          className='bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 shadow-lg border rounded-full text-xl'
           disabled={cart.cartItems.length <= 0 ? 'disabled' : ''}
         >
           <Link href='/checkout'>

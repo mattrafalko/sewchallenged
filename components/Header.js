@@ -12,13 +12,16 @@ export default function Header() {
   };
 
   return (
-    <div className='sticky top-0 p-6 bg-gray-500 z-10'>
+    <div className='sticky top-0 p-6 border-teal-500 border-b-4 bg-white z-10 shadow-xl'>
       <header className='flex justify-between items-center max-w-screen-xl mx-auto'>
-        <h1 className='text-3xl font-extrabold'>
-          <Link href='/'>
-            <a>SewChallenged</a>
-          </Link>
-        </h1>
+        <div className=''>
+          <h1 className='siteHeader'>
+            <Link href='/'>
+              <a>SewChallenged</a>
+            </Link>
+          </h1>
+        </div>
+        <NavLinks className='hidden md:block' />
         <div className='lg:hidden'>
           <button onClick={() => toggleMenu()}>
             <MenuButton />

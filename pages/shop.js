@@ -49,7 +49,7 @@ const Shop = ({ stripeProducts }) => {
           {categories.map((category) => {
             return (
               <React.Fragment>
-                <h2 className='p-6 text-2xl'>{category}</h2>
+                <h2 className='p-6 text-2xl font-semibold'>{category}</h2>
                 <div className='flex flex-wrap'>
                   {products.map((product) => {
                     if (product.metadata.Category === category) {

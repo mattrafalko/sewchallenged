@@ -3,17 +3,17 @@ import Link from 'next/link';
 
 const NavLinks = () => {
   return (
-    <div className='sidebar text-2xl mt-3 space-y-3'>
+    <div className='items-center text-2xl mt-3 flex justify-between space-x-8'>
       <Link href='/'>
-        <a className='text-white '>Home</a>
+        <a className='navLinks '>Home</a>
       </Link>
 
       <Link href='/shop'>
-        <a className='text-white '>Shop</a>
+        <a className='navLinks '>Shop</a>
       </Link>
 
       <Link href='/about'>
-        <a className='text-white '>About</a>
+        <a className='navLinks '>About</a>
       </Link>
     </div>
   );
