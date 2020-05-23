@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Layout from '../components/Layout';
-import Prismic from 'prismic-javascript';
-import { Client } from '../prismic-configuration';
 import ProductCard from '../components/ProductCard';
 import SelectedProductCard from '../components/SelectedProductCard';
 import ShoppingCartContext from '../components/ShoppingCartContext';
@@ -31,7 +29,7 @@ const Shop = ({ stripeProducts }) => {
   }, []);
 
   const handleSelectedProduct = (productId) => {
-    const product = stripeProducts.filter((item) => item.id === productId);
+    const product = products.filter((item) => item.id === productId);
     setSelectedProduct(product[0]);
   };
 
@@ -53,7 +51,7 @@ const Shop = ({ stripeProducts }) => {
               <React.Fragment>
                 <h2 className='p-6 text-2xl'>{category}</h2>
                 <div className='flex flex-wrap'>
-                  {stripeProducts.map((product) => {
+                  {products.map((product) => {
                     if (product.metadata.Category === category) {
                       return (
                         <ProductCard

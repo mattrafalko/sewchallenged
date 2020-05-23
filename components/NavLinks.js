@@ -9,7 +9,7 @@ const NavLinks = () => {
       </Link>
 
       <Link href='/shop'>
-        <a className='text-white '> Shop</a>
+        <a className='text-white '>Shop</a>
       </Link>
 
       <Link href='/about'>

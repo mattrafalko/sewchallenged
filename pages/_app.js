@@ -22,7 +22,6 @@ function MyApp({ Component, pageProps }) {
     const newCartTotal =
       parseInt(cartTotal) + (parseInt(item[0].price) * parseInt(qty)) / 100;
 
-    console.log(newCartTotal);
     const newCartItems = [...cartItems, item[0]];
     updateCart({
       ...cart,

@@ -1,64 +1,68 @@
 import React, { useState } from 'react';
-import { Formik, Field, Form } from 'formik';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
+import * as Yup from 'yup';
+
+const checkoutSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Please enter at least your full first name.')
+    .max(50, 'How about just your first and last name?')
+    .required('Required'),
+  email: Yup.string()
+    .email('Please enter a valid email. We just want to send you a receipt 😊')
+    .required('Required'),
+});
 
 const stripePromise = loadStripe(process.env.STRIPE_KEY);
 
-const CheckoutForm = ({ price, description }) => {
-  const stripe = useStripe();
-  const elements = useElements();
+const CheckoutForm = ({ total, items }) => {
+  const [checkoutFailed, setCheckoutFailed] = useState(null);
+
+  const createStripeSession = async (data, items, total) => {
+    try {
+      const response = await axios.post('/api/createSession', {
+        data,
+        items,
+        total,
+      });
+
+      if (response.status !== 200) throw response;
+
+      return response.data.id;
+    } catch (error) {
+      setCheckoutFailed(error);
+      return;
+    }
+  };
+
+  const redirectToStripe = async (sessionID) => {
+    try {
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: sessionID,
+      });
+      if (error) throw error;
+    } catch (error) {
+      setCheckoutFailed(error);
+      return;
+    }
+  };
 
   return (
     <div className='flex flex-col items-center h-full flex-1'>
       <Formik
         initialValues={{
-          billing: {
-            address: {
-              line1: '',
-              line2: '',
-              city: '',
-              state: '',
-              postal_code: '',
-              country: 'US',
-            },
-            name: '',
-            email: '',
-          },
-          shipping: {
-            address: {
-              line1: '',
-              line2: '',
-              city: '',
-              state: '',
-              postal_code: '',
-              country: 'US',
-            },
-            name: '',
-          },
-          sameAsShipping: true,
+          name: '',
+          email: '',
         }}
-        onSubmit={async (data, { setSubmitting }) => {
-          setSubmitting(true);
-
-          try {
-            const response = await axios.post('/api/createSession', {
-              billing: { ...data.billing },
-              shipping: { ...data.shipping },
-            });
-            console.log(response);
-
-            const stripe = await stripePromise;
-            const { error } = await stripe.redirectToCheckout({
-              sessionId: response.data.id,
-            });
-          } catch (error) {
-            console.log(error);
-          }
+        validationSchema={checkoutSchema}
+        onSubmit={async (data) => {
+          const id = await createStripeSession(data, items, total);
+          redirectToStripe(await id);
         }}
       >
-        {({ values, isSubmitting }) => (
+        {({ values, errors, touched }) => (
           <Form class='max-w-lg w-full border rounded p-6'>
             <div class='flex flex-wrap -mx-3 mb-6'>
               <div class='mb-6 px-3 w-full md:mb-0'>
@@ -70,256 +74,74 @@ const CheckoutForm = ({ price, description }) => {
                 </label>
 
                 <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-red-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full'
-                  name='billing.name'
+                  class={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                    errors.name && touched.name ? 'border-red-500' : ''
+                  }`}
+                  name='name'
                   placeholder='First Name'
                   type='input'
                 />
-                <p class='text-xs italic text-red-500'>
-                  Please fill out this field.
-                </p>
+                <div className=''>
+                  {errors.name && touched.name ? (
+                    <p class='text-xs'>{errors.name}</p>
+                  ) : null}
+                </div>
               </div>
             </div>
             <div class='flex flex-wrap -mx-3 mb-6'>
               <div class='px-3 w-full'>
                 <label
                   class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-password'
+                  for='grid-email'
                 >
                   Email
                 </label>
                 <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full'
+                  class={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                    errors.name && touched.name ? 'border-red-500' : ''
+                  }`}
                   id='grid-email'
                   type='email'
-                  name='billing.email'
+                  name='email'
                   placeholder='Email'
                 />
               </div>
-            </div>
-            <div class='flex -mx-3 mb-6'>
-              <div class='px-3 w-full'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-password'
-                >
-                  Address Line 1
-                </label>
-                <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700'
-                  id='grid-email'
-                  type='input'
-                  name='billing.address.line1'
-                  placeholder='Address Line 1'
-                />
+              <div className=''>
+                {errors.email && touched.email ? (
+                  <p class='text-xs '>{errors.email}</p>
+                ) : null}
               </div>
-              <div class='px-3 w-full'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-password'
-                >
-                  Address Line 2
-                </label>
-                <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700'
-                  id='grid-email'
-                  type='input'
-                  name='billing.address.line2'
-                  placeholder='Address Line 2'
-                />
-              </div>
-            </div>
-            <div class='flex flex-wrap -mx-3 mb-2'>
-              <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-city'
-                >
-                  City
-                </label>
-
-                <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full'
-                  name='billing.address.city'
-                  placeholder='City'
-                  type='input'
-                />
-              </div>
-              <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-state'
-                >
-                  State
-                </label>
-                <div class='relative'>
-                  <select
-                    as='select'
-                    class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 pr-8 text-gray-700 w-full'
-                    id='grid-state'
-                    name='billing.address.state'
-                  >
-                    <option value='billing.state'>New Mexico</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
-                  </select>
-                  <div class='items-center flex inset-y-0 right-0 px-2 pointer-events-none absolute text-gray-700'>
-                    <svg
-                      class='fill-current h-4 w-4'
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 20 20'
-                    >
-                      <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-zip'
-                >
-                  Zip
-                </label>
-
-                <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full'
-                  name='billing.address.postal_code'
-                  placeholder='Zip'
-                  type='input'
-                />
-              </div>
-            </div>
-            <div>
-              <Field type='checkbox' name='sameAsShipping' />
-            </div>
-            <div
-              class={`flex flex-wrap -mx-3 mb-6 ${
-                values.sameAsShipping ? 'hidden' : ''
-              }`}
-            >
-              <hr className='border-t-2' />
-
-              <div class='px-3 w-full md:w-1/2'>
-                <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-last-name'
-                >
-                  Name
-                </label>
-
-                <Field
-                  class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full'
-                  name='shipping.name'
-                  placeholder='Last Name'
-                  type='input'
-                />
-              </div>
-              <div class='flex -mx-3 mb-6'>
-                <div class='px-3 w-full'>
-                  <label
-                    class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                    for='grid-password'
-                  >
-                    Address Line 1
-                  </label>
-                  <Field
-                    class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700'
-                    id='grid-email'
-                    type='input'
-                    name='shipping.address.line1'
-                    placeholder='Address Line 1'
-                  />
-                </div>
-                <div class='px-3 w-full'>
-                  <label
-                    class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                    for='grid-password'
-                  >
-                    Address Line 2
-                  </label>
-                  <Field
-                    class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700'
-                    id='grid-email'
-                    type='input'
-                    name='shipping.address.line2'
-                    placeholder='Address Line 2'
-                  />
-                </div>
-              </div>
-              <div class='flex flex-wrap -mx-3 mb-2'>
-                <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                  <label
-                    class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                    for='grid-city'
-                  >
-                    City
-                  </label>
-
-                  <Field
-                    class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full'
-                    name='shipping.address.city'
-                    placeholder='City'
-                    type='input'
-                  />
-                </div>
-                <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                  <label
-                    class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                    for='grid-state'
-                  >
-                    State
-                  </label>
-                  <div class='relative'>
-                    <select
-                      as='select'
-                      class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 pr-8 text-gray-700 w-full'
-                      id='grid-state'
-                      name='shipping.address.state'
-                    >
-                      <option value='billing.state'>New Mexico</option>
-                      <option>Missouri</option>
-                      <option>Texas</option>
-                    </select>
-                    <div class='items-center flex inset-y-0 right-0 px-2 pointer-events-none absolute text-gray-700'>
-                      <svg
-                        class='fill-current h-4 w-4'
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 20 20'
-                      >
-                        <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class='mb-6 px-3 w-full md:w-1/3 md:mb-0'>
-                  <label
-                    class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                    for='grid-zip'
-                  >
-                    Zip
-                  </label>
-
-                  <Field
-                    class='appearance-none focus:bg-white bg-gray-200 border-gray-200 focus:border-gray-500 rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full'
-                    name='shipping.address.postal_code'
-                    placeholder='Zip'
-                    type='input'
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <CardElement />
             </div>
 
             <button
               type='submit'
-              disabled={isSubmitting || !stripe}
-              class='bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full'
+              disabled={
+                (errors && !values.email) || (errors && !values.name)
+                  ? 'disabled'
+                  : ''
+              }
+              class={`bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full ${
+                (errors && !values.email) || (errors && !values.name)
+                  ? ' cursor-not-allowed'
+                  : ''
+              }`}
             >
               <span class='mx-auto'>Place Order</span>
             </button>
+            {!checkoutFailed ? (
+              ''
+            ) : (
+              <div>
+                {checkoutFailed.name === 'IntegrationError' ? (
+                  <p>
+                    Sorry, were having issues processing your order at this
+                    time. Please reach out to mattrafalko@gmail.com.{' '}
+                  </p>
+                ) : (
+                  <p>{checkoutFailed.message}</p>
+                )}
+              </div>
+            )}
           </Form>
         )}
       </Formik>

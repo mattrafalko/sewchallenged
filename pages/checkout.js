@@ -10,13 +10,6 @@ const stripePromise = loadStripe(process.env.STRIPE_KEY);
 const Checkout = () => {
   const { cart } = useContext(ShoppingCartContext);
 
-  const paymentDescription = cart.cartItems.map((item) => ({
-    item: item.data.name[0].text,
-    description: item.data.description[0].text,
-    quantity: item.qty,
-    price: item.data.price,
-  }));
-
   return (
     <Layout>
       <div className='flex lg:flex-row flex-col border rounded p-6'>
@@ -35,11 +28,11 @@ const Checkout = () => {
                   className='flex justify-between font-semibold text-xl mt-3'
                 >
                   <div>
-                    <span className=''>{item.data.name[0].text}</span>
+                    <span className=''>{item.name}</span>
                   </div>
                   <div>
                     <span className=''>
-                      ${item.data.price} x {item.qty}
+                      ${item.price} x {item.qty}
                     </span>
                   </div>
                 </div>
@@ -54,10 +47,7 @@ const Checkout = () => {
           </div>
         </div>
         <Elements stripe={stripePromise}>
-          <CheckoutForm
-            price={cart.cartTotal}
-            description={paymentDescription}
-          />
+          <CheckoutForm total={cart.cartTotal} items={cart.cartItems} />
         </Elements>
       </div>
     </Layout>
