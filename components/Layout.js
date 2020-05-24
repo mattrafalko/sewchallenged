@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Head from 'next/head';
+import Footer from './Footer';
 
 const Layout = (props) => (
   <React.Fragment>
@@ -15,6 +16,7 @@ const Layout = (props) => (
         <div className='mt-12'>{props.children}</div>
       </div>
     </div>
+    <Footer />
   </React.Fragment>
 );
 

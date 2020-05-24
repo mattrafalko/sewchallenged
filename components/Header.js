@@ -12,7 +12,7 @@ export default function Header() {
   };
 
   return (
-    <div className='sticky top-0 p-6 border-teal-500 border-b-4 bg-white z-10 shadow-xl'>
+    <nav className='sticky top-0 p-6 border-teal-500 border-b-4 bg-white z-10 shadow-xl'>
       <header className='flex justify-between items-center max-w-screen-xl mx-auto'>
         <div className=''>
           <h1 className='siteHeader'>
@@ -36,6 +36,6 @@ export default function Header() {
           </div>
         </div>
       ) : null}
-    </div>
+    </nav>
   );
 }

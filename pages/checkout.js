@@ -42,7 +42,7 @@ const Checkout = () => {
 
           <div>
             <h3 className='mt-4 text-3xl text-left'>
-              Cart Total: ${cart.cartTotal}
+              Cart Total: ${cart.cartTotal / 100}
             </h3>
           </div>
         </div>

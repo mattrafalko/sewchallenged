@@ -115,7 +115,6 @@ input {
 
 .navLinks {
   @apply px-3;
-  @apply py-2;
   @apply border-b-4;
   @apply border-white;
 }

@@ -121,13 +121,13 @@ const CheckoutForm = ({ total, items }) => {
                   ? 'disabled'
                   : ''
               }
-              class={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-sm px-4 py-2  border rounded-full ${
+              class={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-xl px-4 py-2  border rounded-full ${
                 (errors && !values.email) || (errors && !values.name)
                   ? ' cursor-not-allowed'
                   : ''
               }`}
             >
-              <span class='mx-auto'>Place Order</span>
+              <span class='mx-auto'>Pay with Stripe</span>
             </button>
             {!checkoutFailed ? (
               ''

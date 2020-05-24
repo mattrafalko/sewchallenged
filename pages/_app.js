@@ -16,13 +16,22 @@ function MyApp({ Component, pageProps }) {
 
   const additemToCart = (id, qty) => {
     const { cartItems, cartTotal } = cart;
-    let item = products.filter((product) => product.id === id);
-    item[0] = { ...item[0], qty: qty };
+    let newCartItems;
+    let item = cartItems.filter((cartItem) => cartItem.id === id);
+    if (item.length) {
+      item[0].qty += qty;
+      newCartItems = cartItems.map((cartItem) =>
+        cartItem.id === id ? item[0] : cartItem
+      );
+    } else {
+      item = products.filter((product) => product.id === id);
+      item[0] = { ...item[0], qty: qty };
+      newCartItems = [...cartItems, item[0]];
+    }
 
     const newCartTotal =
-      parseInt(cartTotal) + (parseInt(item[0].price) * parseInt(qty)) / 100;
+      parseInt(cartTotal) + parseInt(item[0].price) * parseInt(item[0].qty);
 
-    const newCartItems = [...cartItems, item[0]];
     updateCart({
       ...cart,
       cartTotal: newCartTotal,

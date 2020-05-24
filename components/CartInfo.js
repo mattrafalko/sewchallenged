@@ -31,7 +31,7 @@ const CartInfo = () => {
               fill='currentColor'
             />
           </svg>{' '}
-          <span>${cart.cartTotal}</span>
+          <span>${cart.cartTotal / 100}</span>
         </span>
         <button
           className='bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 shadow-lg border rounded-full text-xl'

@@ -7,21 +7,23 @@ const Post = (props) => {
   const { data } = props.doc;
 
   return (
-    <div>
-      <Layout>
-        <div className='p-3 mb-3 rounded-lg tems-center text-3xl font-bold'>
-          <h2 className='text-3xl mb-3'>{RichText.asText(data.blogtitle)}</h2>
+    <Layout>
+      <div className='bg-white min-h-screen rounded-lg shadow-xl p-3'>
+        <div className='p-3 mb-3 rounded-lg tems-center text-3xl font-bold '>
+          <h2 className='text-3xl font-semibold mb-3'>
+            {RichText.asText(data.blogtitle)}
+          </h2>
         </div>
         <div className='overflow-hidden flex flex-col justify-between'>
           <div className='max-w-lg'>
             <img className=' object-cover w-full h-auto' src={data.image.url} />
           </div>
-          <div className='p-6'>
+          <div className=''>
             <RichText render={data.blogbody} linkResolver={linkResolver} />
           </div>
         </div>
-      </Layout>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

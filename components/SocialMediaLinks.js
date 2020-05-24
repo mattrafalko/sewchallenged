@@ -6,7 +6,7 @@ const SocialMediaLinks = () => {
       <a
         href='https://www.youtube.com'
         target='_blank'
-        className='flex items-center space-x-2'
+        className='flex items-center space-x-2 navLinks'
       >
         <svg
           width='24'
@@ -28,7 +28,7 @@ const SocialMediaLinks = () => {
       <a
         href='https://www.facebook.com'
         target='_blank'
-        className='flex items-center space-x-2'
+        className='flex items-center space-x-2 navLinks'
       >
         <svg
           width='24'
@@ -48,7 +48,7 @@ const SocialMediaLinks = () => {
       <a
         href='https://www.twitter.com'
         target='_blank'
-        className='flex items-center space-x-2'
+        className='flex items-center space-x-2 navLinks'
       >
         <svg
           width='24'
@@ -70,7 +70,7 @@ const SocialMediaLinks = () => {
       <a
         href='https://www.instagram.com'
         target='_blank'
-        className='flex items-center space-x-2'
+        className='flex items-center space-x-2 navLinks'
       >
         <svg
           width='24'
