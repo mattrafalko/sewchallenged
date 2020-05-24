@@ -16,8 +16,8 @@ export default async (req, res) => {
       customer_email: data.email,
       shipping_address_collection: { allowed_countries: ['US'] }, // ['US'], //{ ...data.shipping.address },
       mode: 'payment',
-      success_url: 'https://sewchallenged-nxgey5oq2.now.sh/checkoutsuccess',
-      cancel_url: 'https://sewchallenged-nxgey5oq2.now.sh/checkout',
+      success_url: 'https://sewchallenged.mattrafalko.now.sh/checkoutsuccess',
+      cancel_url: 'https://sewchallenged.mattrafalko.now.sh/checkout',
     });
 
     res.status(200).json(session);
