@@ -58,23 +58,23 @@ const CheckoutForm = ({ total, items }) => {
         }}
         validationSchema={checkoutSchema}
         onSubmit={async (data) => {
-          const id = await createStripeSession(data, items, total);
+          const id = await createStripeSession(data, items);
           redirectToStripe(await id);
         }}
       >
         {({ values, errors, touched }) => (
-          <Form class='max-w-lg w-full border rounded p-6 shadow-inner'>
-            <div class='flex flex-wrap mb-6'>
-              <div class='mb-6 px-3 w-full md:mb-0'>
+          <Form className='max-w-lg w-full border rounded p-6 shadow-inner'>
+            <div className='flex flex-wrap mb-6'>
+              <div className='mb-6 px-3 w-full md:mb-0'>
                 <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-first-name'
+                  className='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
+                  forHtml='grid-name'
                 >
                   Name
                 </label>
 
                 <Field
-                  class={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
                     errors.name && touched.name ? 'border-red-500' : ''
                   }`}
                   name='name'
@@ -83,21 +83,21 @@ const CheckoutForm = ({ total, items }) => {
                 />
                 <div className=''>
                   {errors.name && touched.name ? (
-                    <p class='text-sm'>{errors.name}</p>
+                    <p className='text-sm'>{errors.name}</p>
                   ) : null}
                 </div>
               </div>
             </div>
-            <div class='flex flex-wrap'>
-              <div class='mb-6 px-3 w-full md:mb-0'>
+            <div className='flex flex-wrap'>
+              <div className='mb-6 px-3 w-full md:mb-0'>
                 <label
-                  class='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  for='grid-email'
+                  className='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
+                  forHtml='grid-email'
                 >
                   Email
                 </label>
                 <Field
-                  class={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
                     errors.name && touched.name ? 'border-red-500' : ''
                   }`}
                   id='grid-email'
@@ -108,7 +108,7 @@ const CheckoutForm = ({ total, items }) => {
 
                 <div className=''>
                   {errors.email && touched.email ? (
-                    <p class='text-sm '>{errors.email}</p>
+                    <p className='text-sm '>{errors.email}</p>
                   ) : null}
                 </div>
               </div>
@@ -121,13 +121,13 @@ const CheckoutForm = ({ total, items }) => {
                   ? 'disabled'
                   : ''
               }
-              class={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-xl px-4 py-2  border rounded-full ${
+              className={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-xl px-4 py-2  border rounded-full ${
                 (errors && !values.email) || (errors && !values.name)
                   ? ' cursor-not-allowed'
                   : ''
               }`}
             >
-              <span class='mx-auto'>Pay with Stripe</span>
+              <span className='mx-auto'>Pay with Stripe</span>
             </button>
             {!checkoutFailed ? (
               ''

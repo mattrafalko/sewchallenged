@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 
 export default async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET);
-  const { total, items, data } = req.body;
+  const { items, data } = req.body;
 
   const lineItems = items.map((item) => ({
     price: item.priceId,
@@ -14,10 +14,10 @@ export default async (req, res) => {
       payment_method_types: ['card'],
       line_items: [...lineItems],
       customer_email: data.email,
-      shipping_address_collection: { allowed_countries: ['US'] }, // ['US'], //{ ...data.shipping.address },
+      shipping_address_collection: { allowed_countries: ['US'] },
       mode: 'payment',
       success_url: 'https://sewchallenged.mattrafalko.now.sh/checkoutsuccess',
-      cancel_url: 'https://sewchallenged.mattrafalko.now.sh/checkout',
+      cancel_url: 'https://sewchallenged.mattrafalko.now.sh/shop',
     });
 
     res.status(200).json(session);

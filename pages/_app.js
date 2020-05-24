@@ -1,5 +1,5 @@
 import '../styles/styles.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import App from 'next/app';
 import ShoppingCartContext from '../components/ShoppingCartContext';
 import ProductsContext from '../components/ProductsContext';
@@ -7,7 +7,7 @@ import LogRocket from 'logrocket';
 
 LogRocket.init(process.env.LOGROCKET_KEY);
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }, ctx) {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -65,4 +65,5 @@ function MyApp({ Component, pageProps }) {
     </ProductsContext.Provider>
   );
 }
+
 export default MyApp;
