@@ -72,7 +72,7 @@ const Shop = ({ stripeProducts }) => {
   );
 };
 
-Shop.getInitialProps = async () => {
+export const getServerSideProps = async () => {
   const stripe = new Stripe(process.env.STRIPE_SECRET);
   const { data } = await stripe.products.list();
   const prices = await stripe.prices.list();
@@ -83,7 +83,7 @@ Shop.getInitialProps = async () => {
     return { ...item, price: itemPrice.unit_amount, priceId: itemPrice.id };
   });
 
-  return { stripeProducts: [...products] };
+  return { props: { stripeProducts: [...products] } };
 };
 
 export default Shop;
