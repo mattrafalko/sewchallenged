@@ -23,7 +23,9 @@ const Home = (props) => {
   return (
     <Layout>
       <div className='flex flex-col flex-1 h-64 bg-teal-500 rounded-lg shadow-xl p-4'>
-        <span className='text-6xl text-gray-100'>Welcome to SewChallenged</span>
+        <span className='lg:text-6xl text-3xl text-gray-100'>
+          Welcome to SewChallenged
+        </span>
         <p className='bg-teal-500 text-gray-100'>
           A blog about sewing, drinking, and so much more
         </p>

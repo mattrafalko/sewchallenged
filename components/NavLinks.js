@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const NavLinks = () => {
   return (
-    <div className='items-center text-2xl mt-3 flex justify-between'>
+    <div className='lg:items-center text-2xl mt-3 flex flex-col lg:flex-row items-end lg:justify-between'>
       <Link href='/'>
         <a className='navLinks'>Home</a>
       </Link>
