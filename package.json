@@ -28,6 +28,7 @@
     "formik": "^2.1.4",
     "heroicons": "^0.2.0",
     "isomorphic-unfetch": "^3.0.0",
+    "logrocket": "^1.0.7",
     "moment": "^2.25.3",
     "next": "^9.4.2",
     "next-optimized-images": "^2.6.0",

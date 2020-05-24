@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import App from 'next/app';
 import ShoppingCartContext from '../components/ShoppingCartContext';
 import ProductsContext from '../components/ProductsContext';
+import LogRocket from 'logrocket';
+
+LogRocket.init(process.env.LOGROCKET_KEY);
 
 function MyApp({ Component, pageProps }) {
   const [products, setProducts] = useState([]);
