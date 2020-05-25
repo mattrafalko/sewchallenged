@@ -31,7 +31,7 @@ const HomeBlogPostCard = ({ uid, imgUrl, blogTitle, date, tags }) => {
                   </span>
                 ))}
               </div>
-              <h2 className='text-2xl leading-7 font-semibold'>
+              <h2 className='mt-6 text-2xl leading-7 font-semibold'>
                 <a className=''>{RichText.asText(blogTitle)}</a>
               </h2>
             </div>

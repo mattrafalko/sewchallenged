@@ -59,7 +59,6 @@ li {
   @apply flex;
   @apply flex-col;
   @apply justify-between;
-  @apply h-0;
   @apply flex-1;
 }
 
