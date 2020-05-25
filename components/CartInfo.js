@@ -33,14 +33,14 @@ const CartInfo = () => {
           </svg>{' '}
           <span>${cart.cartTotal / 100}</span>
         </span>
-        <button
-          className='bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 shadow-lg border rounded-full text-xl'
-          disabled={cart.cartItems.length <= 0 ? 'disabled' : ''}
-        >
-          <Link href='/checkout'>
+        <Link href='/checkout'>
+          <button
+            className='bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 shadow-lg border rounded-full text-xl'
+            disabled={cart.cartItems.length <= 0 ? 'disabled' : ''}
+          >
             <a>Checkout</a>
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </React.Fragment>
   );
