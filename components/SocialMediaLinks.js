@@ -2,11 +2,11 @@ import React from 'react';
 
 const SocialMediaLinks = () => {
   return (
-    <div className=' max-w-screen-mdc flex flex-col lg:flex-row text-right lg:justify-between items-end pb-6 text-gray-900 text-3xl mt-8 px-8 lg:px-0'>
+    <div className=' flex flex-row justify-between w-full items-end text-gray-900 mt-8 px-8 '>
       <a
         href='https://www.youtube.com'
         target='_blank'
-        className='flex items-center space-x-2 navLinks'
+        className='flex items-center navLinks'
       >
         <svg
           width='24'

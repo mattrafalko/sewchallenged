@@ -30,7 +30,7 @@ const Post = (props) => {
           <div className='mt-3  w-full h-full rounded-lg overflow-hidden'>
             <div className='pb-2/3 relative'>
               <img
-                className='absolute to-0 object-cover w-full h-full mx-auto bg'
+                className='absolute object-cover w-full h-full mx-auto'
                 src={data.image.url}
               />
             </div>
