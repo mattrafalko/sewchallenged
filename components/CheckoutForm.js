@@ -68,13 +68,13 @@ const CheckoutForm = ({ total, items }) => {
               <div className='mb-6 px-3 w-full md:mb-0'>
                 <label
                   className='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  forHtml='grid-name'
+                  forhtml='grid-name'
                 >
                   Name
                 </label>
 
                 <Field
-                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full ${
                     errors.name && touched.name ? 'border-red-500' : ''
                   }`}
                   name='name'
@@ -92,12 +92,12 @@ const CheckoutForm = ({ total, items }) => {
               <div className='mb-6 px-3 w-full md:mb-0'>
                 <label
                   className='block text-xs font-bold tracking-wide mb-2 text-gray-700 uppercase'
-                  forHtml='grid-email'
+                  forhtml='grid-email'
                 >
                   Email
                 </label>
                 <Field
-                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight mb-3 focus:outline-none py-3 px-4 text-gray-700 w-full ${
+                  className={`appearance-none focus:bg-white bg-gray-200  rounded border block leading-tight focus:outline-none py-3 px-4 text-gray-700 w-full ${
                     errors.name && touched.name ? 'border-red-500' : ''
                   }`}
                   id='grid-email'

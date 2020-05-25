@@ -8,12 +8,12 @@ import { Elements } from '@stripe/react-stripe-js';
 const stripePromise = loadStripe(process.env.STRIPE_KEY);
 
 const Checkout = () => {
-  const { cart } = useContext(ShoppingCartContext);
+  const { cart, removeFromCart } = useContext(ShoppingCartContext);
 
   return (
     <Layout>
-      <div className='flex lg:flex-row flex-col border rounded p-6 shadow-lg'>
-        <div className='flex flex-col justify-between mb-6 w-1/2'>
+      <div className='flex lg:flex-row  flex-col border rounded p-6 shadow-lg mb-6'>
+        <div className='flex flex-1 flex-grow flex-col justify-between mb-6'>
           <div>
             <h3 className='text-5xl font-extrabold tracking-wide'>
               Your Order
@@ -36,6 +36,11 @@ const Checkout = () => {
                     </span>
                   </div>
                 </div>
+                <div className=''>
+                  <button onClick={() => removeFromCart(item.id)}>
+                    Remove Item
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -46,10 +51,11 @@ const Checkout = () => {
             </h3>
           </div>
         </div>
-
-        <Elements stripe={stripePromise}>
-          <CheckoutForm total={cart.cartTotal} items={cart.cartItems} />
-        </Elements>
+        <div className='flex-1'>
+          <Elements stripe={stripePromise}>
+            <CheckoutForm total={cart.cartTotal} items={cart.cartItems} />
+          </Elements>
+        </div>
       </div>
     </Layout>
   );

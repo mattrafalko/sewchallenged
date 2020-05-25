@@ -17,8 +17,16 @@ function MyApp({ Component, pageProps }, ctx) {
     checkoutComplete: false,
   });
 
+  const calculateCartTotal = (newCartItems) => {
+    let newCartTotal = 0;
+
+    newCartItems.forEach((item) => (newCartTotal += item.price * item.qty));
+
+    return newCartTotal;
+  };
+
   const additemToCart = (id, qty) => {
-    const { cartItems, cartTotal } = cart;
+    const { cartItems } = cart;
     let newCartItems;
     let item = cartItems.filter((cartItem) => cartItem.id === id);
     if (item.length) {
@@ -31,14 +39,25 @@ function MyApp({ Component, pageProps }, ctx) {
       item[0] = { ...item[0], qty: qty };
       newCartItems = [...cartItems, item[0]];
     }
-
-    const newCartTotal =
-      parseInt(cartTotal) + parseInt(item[0].price) * parseInt(item[0].qty);
+    let newCartTotal = calculateCartTotal(newCartItems);
 
     updateCart({
       ...cart,
       cartTotal: newCartTotal,
       cartItems: newCartItems,
+    });
+  };
+
+  const removeFromCart = (id) => {
+    const { cartItems } = cart;
+    let newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
+
+    let newCartTotal = calculateCartTotal(newCartItems);
+
+    updateCart({
+      ...cart,
+      cartItems: newCartItems,
+      cartTotal: newCartTotal,
     });
   };
 
@@ -59,7 +78,9 @@ function MyApp({ Component, pageProps }, ctx) {
         setSelectedProduct,
       }}
     >
-      <ShoppingCartContext.Provider value={{ cart, additemToCart }}>
+      <ShoppingCartContext.Provider
+        value={{ cart, additemToCart, removeFromCart }}
+      >
         <Component {...pageProps} />
       </ShoppingCartContext.Provider>
     </ProductsContext.Provider>

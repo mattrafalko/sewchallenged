@@ -1,3 +1,4 @@
+/* purgecss begin ignore */
 @tailwind base;
 /* purgecss end ignore */
 @tailwind components;
@@ -35,7 +36,6 @@ li {
   @apply p-2;
 }
 
-/*Blog Post Cards - index*/
 .card {
   @apply flex;
   @apply flex-col;
@@ -48,9 +48,6 @@ li {
 }
 
 .card:hover {
-  /* transform: translate(0, -2%); */
-  /* transition-timing-function: ease-in-out;
-  transition: 0.2s; */
   @apply shadow-xl;
   @apply transition;
   @apply ease-out;
@@ -71,9 +68,6 @@ li {
   @apply text-gray-600;
   @apply text-base;
 }
-/*End Section*/
-
-/*Selected Product Card*/
 
 .selectedProductCard {
   @apply flex;
