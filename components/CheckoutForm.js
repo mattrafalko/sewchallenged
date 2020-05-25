@@ -121,7 +121,7 @@ const CheckoutForm = ({ total, items }) => {
                   ? 'disabled'
                   : ''
               }
-              className={`bg-teal-600 w-full mt-12 shadow-md hover:bg-green-700 text-white text-xl px-4 py-2  border rounded-full ${
+              className={`bg-teal-600 w-full mt-12 shadow-md hover:bg-teal-700 text-white text-xl px-4 py-2  border rounded-full ${
                 (errors && !values.email) || (errors && !values.name)
                   ? ' cursor-not-allowed'
                   : ''

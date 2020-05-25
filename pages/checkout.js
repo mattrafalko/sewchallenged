@@ -12,8 +12,8 @@ const Checkout = () => {
 
   return (
     <Layout>
-      <div className='flex lg:flex-row  flex-col border rounded p-6 shadow-lg mb-6'>
-        <div className='flex flex-1 flex-grow flex-col justify-between mb-6'>
+      <div className='flex lg:flex-row  flex-col min-h-screen'>
+        <div className='flex flex-1 flex-col mb-6'>
           <div>
             <h3 className='text-5xl font-extrabold tracking-wide'>
               Your Order
@@ -28,18 +28,18 @@ const Checkout = () => {
                   className='flex justify-between font-semibold text-xl mt-3'
                 >
                   <div>
-                    <span className=''>{item.name}</span>
-                  </div>
-                  <div>
-                    <span className=''>
-                      ${item.price / 100} x {item.qty}
+                    <span className='flex-1'>
+                      {item.name} - ${item.price / 100} x {item.qty}
                     </span>
                   </div>
-                </div>
-                <div className=''>
-                  <button onClick={() => removeFromCart(item.id)}>
-                    Remove Item
-                  </button>
+                  <div className=''>
+                    <button
+                      className='flex-1'
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -51,6 +51,7 @@ const Checkout = () => {
             </h3>
           </div>
         </div>
+
         <div className='flex-1'>
           <Elements stripe={stripePromise}>
             <CheckoutForm total={cart.cartTotal} items={cart.cartItems} />
