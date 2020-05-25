@@ -70,7 +70,11 @@ const Shop = ({ stripeProducts }) => {
               })}
             </div>
           </React.Fragment>
-        ) : null}
+        ) : (
+          <div>
+            <p>Looks like were all out. Check back later for more products!</p>
+          </div>
+        )}
       </Layout>
     </React.Fragment>
   );

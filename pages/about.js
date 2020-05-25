@@ -12,10 +12,8 @@ const About = (props) => {
         <div className='p-6 mx-auto max-w-4xl bg-white min-h-full rounded shadow-xl'>
           <div className='text-5xl font-extrabold tracking-wide'>
             <RichText render={data.title} />
-            <div>
-              <RichText render={data.content} linkResolver={linkResolver} />
-            </div>
           </div>
+          <RichText render={data.content} linkResolver={linkResolver} />
         </div>
       </Layout>
     </React.Fragment>
