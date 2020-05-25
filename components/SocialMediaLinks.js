@@ -2,7 +2,7 @@ import React from 'react';
 
 const SocialMediaLinks = () => {
   return (
-    <div className=' flex flex-row justify-between w-full items-end text-gray-900 mt-8 px-8 '>
+    <div className=' flex flex-row justify-between w-full items-end mt-4 text-gray-900 px-8 '>
       <a
         href='https://www.youtube.com'
         target='_blank'

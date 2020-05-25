@@ -21,8 +21,11 @@ export default function Header() {
             </Link>
           </h1>
         </div>
-
-        <div>
+        <div className='hidden lg:block'>
+          <NavLinks />
+          <SocialMediaLinks />
+        </div>
+        <div className='lg:hidden'>
           <button onClick={() => toggleMenu()}>
             <MenuButton />
           </button>

@@ -22,13 +22,13 @@ const Home = (props) => {
 
   return (
     <Layout>
-      <div className='flex flex-col flex-1 h-64 bg-teal-500 rounded-lg shadow-xl p-4'>
-        <span className='lg:text-6xl text-3xl text-gray-100'>
-          Welcome to SewChallenged
+      <div className='flex flex-col flex-1 bg-teal-500 rounded-lg shadow-xl p-4'>
+        <span className='lg:text-6xl text-3xl text-gray-100 font-bold'>
+          Welcome to SewChallenged!
         </span>
-        <p className='bg-teal-500 text-gray-100'>
-          A blog about sewing, drinking, and so much more
-        </p>
+        <span className='bg-teal-500 text-gray-100 lg:text-2xl'>
+          A blog about sewing, drinking, and <em>sew</em> much more
+        </span>
       </div>
       <div className='flex flex-wrap mt-6'>{posts}</div>
     </Layout>

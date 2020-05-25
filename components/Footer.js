@@ -6,11 +6,13 @@ const Footer = () => {
       <div className='max-w-screen-xl text-gray-100 mx-auto'>
         <div className='flex justify-between'>
           <span className='text-gray-100 text-xs lg:text-base'>
-            SewChallenged &copy;, 2020
+            &copy; SewChallenged 2020
           </span>
           <span className='text-gray-100 text-xs lg:text-base'>
-            Built with 🖤 by{' '}
-            <a href='https://www.github.com/mattrafalko'>Matt Rafalko</a>
+            Built by{' '}
+            <a href='https://www.github.com/mattrafalko' className='font-bold'>
+              RCW
+            </a>
           </span>
         </div>
       </div>
