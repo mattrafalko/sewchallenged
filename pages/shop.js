@@ -85,7 +85,6 @@ export const getServerSideProps = async () => {
     const stripe = new Stripe(process.env.STRIPE_SECRET);
     const { data } = await stripe.products.list();
     const prices = await stripe.prices.list();
-
     let products = data.map((item) => {
       let itemPrice = prices.data.filter((price) => price.product === item.id);
       itemPrice = itemPrice[0];
