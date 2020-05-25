@@ -37,57 +37,61 @@ const Shop = ({ stripeProducts }) => {
     <React.Fragment>
       <Layout>
         <CartInfo />
-        <div className='flex mt-12'>
-          {selectedProduct ? (
-            <SelectedProductCard
-              item={selectedProduct}
-              addToCart={additemToCart}
-            />
-          ) : null}
-        </div>
-        <div className=' bg-gray-100 my-6 rounded-lg'>
-          {categories.map((category) => {
-            return (
-              <React.Fragment>
-                <h2 className='p-6 text-2xl font-semibold'>{category}</h2>
-                <div className='flex flex-wrap'>
-                  {products.map((product) => {
-                    if (product.metadata.Category === category) {
-                      return (
-                        <ProductCard
-                          item={product}
-                          handleSelection={handleSelectedProduct}
-                          key={product.id}
-                        />
-                      );
-                    }
-                  })}
-                </div>
-              </React.Fragment>
-            );
-          })}
-        </div>
+        {stripeProducts.length > 0 ? (
+          <React.Fragment>
+            <div className='flex mt-12'>
+              {selectedProduct ? (
+                <SelectedProductCard
+                  item={selectedProduct}
+                  addToCart={additemToCart}
+                />
+              ) : null}
+            </div>
+            <div className=' bg-gray-100 my-6 rounded-lg'>
+              {categories.map((category) => {
+                return (
+                  <React.Fragment>
+                    <h2 className='p-6 text-2xl font-semibold'>{category}</h2>
+                    <div className='flex flex-wrap'>
+                      {products.map((product) => {
+                        if (product.metadata.Category === category) {
+                          return (
+                            <ProductCard
+                              item={product}
+                              handleSelection={handleSelectedProduct}
+                              key={product.id}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </React.Fragment>
+        ) : null}
       </Layout>
     </React.Fragment>
   );
 };
 
 export const getServerSideProps = async () => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET);
-  const { data } = await stripe.products.list();
-  const prices = await stripe.prices.list();
+  try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET);
+    const { data } = await stripe.products.list();
+    const prices = await stripe.prices.list();
 
-  console.log(data);
+    let products = data.map((item) => {
+      let itemPrice = prices.data.filter((price) => price.product === item.id);
+      itemPrice = itemPrice[0];
+      return { ...item, price: itemPrice.unit_amount, priceId: itemPrice.id };
+    });
 
-  let products = data.map((item) => {
-    let itemPrice = prices.data.filter((price) => price.product === item.id);
-    itemPrice = itemPrice[0];
-    return { ...item, price: itemPrice.unit_amount, priceId: itemPrice.id };
-  });
-
-  console.log(products);
-
-  return { props: { stripeProducts: [...products] } };
+    return { props: { stripeProducts: [...products] } };
+  } catch (error) {
+    return { props: { stripeProducts: [] } };
+  }
 };
 
 export default Shop;
